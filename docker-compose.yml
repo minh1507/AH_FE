@@ -1,11 +1,11 @@
 version: '3'
 services:
-  app:
+  fe_image:
     build: .
     ports:
       - "4000:4000"
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/fe_image
+      - /fe_image/node_modules
     environment:
       - NODE_ENV=development
