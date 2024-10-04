@@ -53,13 +53,14 @@ const Home = () => {
 
   return (
     <div>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar sx={{ zIndex: 1200 }}>
+        <Toolbar sx={{ zIndex: 1201 }}>
           <FileMenu handleImageUpload={handleImageUpload} handleExport={handleExport} />
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="md" sx={{ mt: 4 }}>
+
+      <Container maxWidth="md" sx={{ mt: 4, display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <Box>
           {image && <Canvas image={image} rotation={rotation} brightness={brightness} />}
         </Box>

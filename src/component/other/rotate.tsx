@@ -13,7 +13,6 @@ const RotateControls: React.FC<RotateControlsProps> = ({
 }) => {
   return (
     <Box sx={{ mt: 4 }}>
-      <Typography variant="h6">Image Manipulation Toolbar</Typography>
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid item>
           <IconButton onClick={onRotateLeft} color="primary">
