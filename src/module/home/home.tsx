@@ -16,6 +16,7 @@ const Home = () => {
   const [brightness, setBrightness] = useState<number>(50);
   const [rotation, setRotation] = useState<number>(0);
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
+  const [isGreyscale, setIsGreyscale] = useState<boolean>(false); // New state for greyscale
 
   // Handlers for image upload
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +40,11 @@ const Home = () => {
     setRotation((prev) => prev + (direction === 'left' ? -90 : 90));
   };
 
+  // Greyscale toggle function
+  const toggleGreyscale = () => {
+    setIsGreyscale((prev) => !prev);
+  };
+
   // Export functionality
   const handleExport = () => {
     const canvas = document.querySelector("canvas");
@@ -59,15 +65,18 @@ const Home = () => {
         </Toolbar>
       </AppBar>
 
-
       <Container maxWidth="md" sx={{ mt: 4, display: 'flex', flexDirection: 'column', position: 'relative' }}>
         <Box>
-          {image && <Canvas image={image} rotation={rotation} brightness={brightness} />}
+          {image && <Canvas image={image} rotation={rotation} brightness={brightness} isGreyscale={isGreyscale} />}
         </Box>
 
         {image && (
           <Box>
-            <ToolDrawer onSelectTool={setSelectedTool} />
+            <ToolDrawer
+              onSelectTool={setSelectedTool}
+              isGreyscale={isGreyscale}
+              toggleGreyscale={toggleGreyscale}
+            />
           </Box>
         )}
 

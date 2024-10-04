@@ -1,13 +1,16 @@
 import React from "react";
-import { Drawer, Grid, IconButton } from "@mui/material"; // Import Grid and IconButton
-import Brightness4Icon from "@mui/icons-material/Brightness4"; // Import the icon for brightness
-import RotateRightIcon from "@mui/icons-material/RotateRight"; // Import the icon for rotate
+import { Drawer, Grid, IconButton, Tooltip } from "@mui/material"; 
+import Brightness4Icon from "@mui/icons-material/Brightness4"; 
+import RotateRightIcon from "@mui/icons-material/RotateRight"; 
+import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 
 interface ToolDrawerProps {
   onSelectTool: (tool: string) => void;
+  isGreyscale: boolean; 
+  toggleGreyscale: () => void; 
 }
 
-const ToolDrawer: React.FC<ToolDrawerProps> = ({ onSelectTool }) => {
+const ToolDrawer: React.FC<ToolDrawerProps> = ({ onSelectTool, isGreyscale, toggleGreyscale }) => {
   return (
     <Drawer
       variant="permanent"
@@ -15,21 +18,31 @@ const ToolDrawer: React.FC<ToolDrawerProps> = ({ onSelectTool }) => {
       sx={{
         width: 240,
         flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: 240, boxSizing: "border-box", marginTop: '64px' }, // Adjust for AppBar height
+        [`& .MuiDrawer-paper`]: { width: 240, boxSizing: "border-box", marginTop: '64px' }, 
       }}
     >
-      <Grid container spacing={2} sx={{ padding: 2 }}> {/* Use Grid container */}
-        <Grid item xs={4}> {/* Each item takes up 4 columns (3 items per row) */}
-          <IconButton onClick={() => onSelectTool("brightness")}>
-            <Brightness4Icon />
-          </IconButton>
+      <Grid container spacing={2} sx={{ padding: 2 }}>
+        <Grid item xs={4}> 
+          <Tooltip title="Adjust Brightness" arrow>
+            <IconButton onClick={() => onSelectTool("brightness")}>
+              <Brightness4Icon />
+            </IconButton>
+          </Tooltip>
         </Grid>
         <Grid item xs={4}>
-          <IconButton onClick={() => onSelectTool("rotate")}>
-            <RotateRightIcon />
-          </IconButton>
+          <Tooltip title="Rotate Image" arrow>
+            <IconButton onClick={() => onSelectTool("rotate")}>
+              <RotateRightIcon />
+            </IconButton>
+          </Tooltip>
         </Grid>
-        {/* Add more tools here, ensuring they stay within the 3 items per row limit */}
+        <Grid item xs={4}>
+          <Tooltip title={isGreyscale ? "Disable Greyscale" : "Enable Greyscale"} arrow>
+            <IconButton onClick={toggleGreyscale}>
+              <FilterVintageIcon color={isGreyscale ? "primary" : "inherit"} /> 
+            </IconButton>
+          </Tooltip>
+        </Grid>
       </Grid>
     </Drawer>
   );
