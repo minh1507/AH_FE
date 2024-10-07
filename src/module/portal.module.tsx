@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Route, Routes, Link } from "react-router-dom"; // Import Link from react-router-dom
-import { lazy } from "react";
-import { styled } from "@mui/system";
+import { Route, Routes, Link } from "react-router-dom"; 
+import { lazy, useState } from "react";
+import { styled, useTheme } from "@mui/system";
 import {
   Box,
   AppBar,
@@ -9,15 +9,26 @@ import {
   Typography,
   Button,
   IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import WatchIcon from "@mui/icons-material/Watch"; // Assuming same icon for categories
 import Logo from "../assets/handle-logo.png";
+import useMediaQuery from '@mui/material/useMediaQuery'; // Import useMediaQuery for mobile view
 
 const Home = lazy(() => import("./home/home"));
 const About = lazy(() => import("./about/about"));
 const Contact = lazy(() => import("./contact/contact")); 
 
 const PortalModule = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false); // State to control Drawer
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check if mobile view
+
   const Footer = styled(Box)({
     backgroundColor: "#ff4b7b",
     padding: "20px",
@@ -55,18 +66,36 @@ const PortalModule = () => {
     justifyContent: "center",
   });
 
+  // Categories list for the drawer
+  const categories = [
+    { name: "Váy", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
+    { name: "Quần", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
+    { name: "Áo", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
+  ];
+
+  // Function to toggle the drawer
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
   return (
     <>
       <PinkAppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, display: { xs: "block", md: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {isMobile && (
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)} // Open drawer on click
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
 
           <LogoContainer>
             <img
@@ -84,6 +113,31 @@ const PortalModule = () => {
           <StyledButton>Đăng nhập</StyledButton>
         </Toolbar>
       </PinkAppBar>
+
+      {/* Drawer for mobile category list */}
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)} // Close drawer on backdrop click
+      >
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={toggleDrawer(false)} // Close drawer on category click
+          onKeyDown={toggleDrawer(false)}
+        >
+          <List>
+            {categories.map((category, index) => (
+              <ListItem button key={index}>
+                <ListItemIcon>
+                  {category.icon}
+                </ListItemIcon>
+                <ListItemText primary={category.name} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
 
       <Routes>
         <Route path="/" element={<Home />} />
