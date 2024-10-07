@@ -228,17 +228,6 @@ const Home = () => {
                       </CategoryPin>
                       <Price variant="body1">100,000 VNĐ</Price>
                       <OriginalPrice variant="body2">150,000 VNĐ</OriginalPrice>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{
-                          mt: "auto",
-                          backgroundColor: "#ff4b7b",
-                          marginTop: "7px",
-                        }}
-                      >
-                        Giỏ hàng
-                      </Button>
                     </ProductCard>
                   </Grid>
                 ))}
