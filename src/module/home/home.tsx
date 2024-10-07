@@ -187,62 +187,65 @@ const Home = () => {
             </Grid>
 
             {/* Menu Bar below the Banner and Slideshow */}
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  backgroundColor: "white",
-                  padding: theme.spacing(2),
-                  borderRadius: "10px",
-                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-                  display: "flex",
-                  alignItems: "left",
-                  marginY: theme.spacing(2),
-                }}
-              >
-                <Button
-                  variant="text"
+            {!isMobile && (
+              <Grid item xs={12}>
+                <Box
                   sx={{
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "#ffe6ea",
-                    },
+                    backgroundColor: "white",
+                    padding: theme.spacing(2),
+                    borderRadius: "10px",
+                    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+                    display: "flex",
+                    alignItems: "left",
+                    marginY: theme.spacing(2),
                   }}
                 >
-                  Gia đình
-                </Button>
-                <Button 
-                  variant="text"
-                  sx={{
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "#ffe6ea",
-                    },
-                  }}
-                >
-                  Bãi biển
-                </Button>
-                <Button 
-                  variant="text"
-                  sx={{
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "#ffe6ea",
-                    },
-                  }}>
-                  Công sở
-                </Button>
-                <Button 
-                  variant="text"
-                  sx={{
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "#ffe6ea",
-                    },
-                  }}>
-                  Tiệc tùng
-                </Button>
-              </Box>
-            </Grid>
+                  <Button
+                    variant="text"
+                    sx={{
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "#ffe6ea",
+                      },
+                    }}
+                  >
+                    Gia đình
+                  </Button>
+                  <Button
+                    variant="text"
+                    sx={{
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "#ffe6ea",
+                      },
+                    }}
+                  >
+                    Bãi biển
+                  </Button>
+                  <Button
+                    variant="text"
+                    sx={{
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "#ffe6ea",
+                      },
+                    }}>
+                    Công sở
+                  </Button>
+                  <Button
+                    variant="text"
+                    sx={{
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "#ffe6ea",
+                      },
+                    }}>
+                    Tiệc tùng
+                  </Button>
+                </Box>
+              </Grid>
+            )}
+
 
             {/* Conditionally render the category sidebar only for non-mobile views */}
             {!isMobile && (
