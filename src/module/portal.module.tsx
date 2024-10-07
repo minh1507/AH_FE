@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Routes, Link } from "react-router-dom"; 
+import { Route, Routes, Link } from "react-router-dom";
 import { lazy, useState } from "react";
 import { styled, useTheme } from "@mui/system";
 import {
@@ -14,18 +14,24 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Dialog, // Import Dialog components
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import WatchIcon from "@mui/icons-material/Watch"; // Assuming same icon for categories
+import WatchIcon from "@mui/icons-material/Watch";
 import Logo from "../assets/handle-logo.png";
 import useMediaQuery from '@mui/material/useMediaQuery'; // Import useMediaQuery for mobile view
 
 const Home = lazy(() => import("./home/home"));
 const About = lazy(() => import("./about/about"));
-const Contact = lazy(() => import("./contact/contact")); 
+const Contact = lazy(() => import("./contact/contact"));
 
 const PortalModule = () => {
   const [drawerOpen, setDrawerOpen] = useState(false); // State to control Drawer
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false); // State to control Login Dialog
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check if mobile view
 
@@ -47,7 +53,7 @@ const PortalModule = () => {
 
   const PinkAppBar = styled(AppBar)(({ theme }) => ({
     backgroundColor: "#ff4b7b",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", 
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
   }));
 
   const StyledButton = styled(Button)({
@@ -56,7 +62,7 @@ const PortalModule = () => {
     fontSize: "16px",
     marginLeft: "20px",
     '&:hover': {
-      backgroundColor: "#ff668c", 
+      backgroundColor: "#ff668c",
     },
   });
 
@@ -79,6 +85,16 @@ const PortalModule = () => {
       return;
     }
     setDrawerOpen(open);
+  };
+
+  // Function to open login dialog
+  const handleLoginOpen = () => {
+    setLoginDialogOpen(true);
+  };
+
+  // Function to close login dialog
+  const handleLoginClose = () => {
+    setLoginDialogOpen(false);
   };
 
   return (
@@ -110,7 +126,7 @@ const PortalModule = () => {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <StyledButton>Đăng nhập</StyledButton>
+          <StyledButton onClick={handleLoginOpen}>Đăng nhập</StyledButton> {/* Open login dialog */}
         </Toolbar>
       </PinkAppBar>
 
@@ -138,6 +154,48 @@ const PortalModule = () => {
           </List>
         </Box>
       </Drawer>
+
+      {/* Login Dialog */}
+      <Dialog
+        open={loginDialogOpen}
+        onClose={handleLoginClose}
+        sx={{
+          '& .MuiDialog-paper': {
+            borderRadius: '15px', // Rounded corners
+            padding: '20px', // Padding inside the dialog
+            backgroundColor: '#ffffff', // Background color
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)', // Add some shadow for depth
+          },
+        }}
+      >
+        <DialogTitle sx={{ fontWeight: 'bold', fontSize: '1.5rem', textAlign: 'center', padding: "0 !important" }}>
+          Đăng nhập
+        </DialogTitle>
+        <DialogContent sx={{padding: "0 !important"}}>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Tên đăng nhập"
+            fullWidth
+            variant="outlined"
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            margin="dense"
+            label="Mật khẩu"
+            type="password"
+            fullWidth
+            variant="outlined"
+            sx={{ mb: 2 }}
+          />
+        </DialogContent>
+        <DialogActions sx={{padding: "0 !important"}}>
+          <Button fullWidth onClick={handleLoginClose} variant="contained" color="primary">
+            Đăng nhập
+          </Button>
+        </DialogActions>
+      </Dialog>
+
 
       <Routes>
         <Route path="/" element={<Home />} />
