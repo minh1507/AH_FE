@@ -45,6 +45,7 @@ const PortalModule = () => {
   const WhiteAppBar = styled(AppBar)(({ theme }) => ({
     backgroundColor: "#ffffff", // White background
     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+    padding: "0 !important"
   }));
 
   const LogoContainer = styled(Box)({
@@ -103,7 +104,7 @@ const PortalModule = () => {
     <MainContainer>
       <WhiteAppBar position="static">
         <Container maxWidth="xl" sx={{ padding: "0 !important" }}>
-          <Toolbar>
+          <Toolbar sx={{ padding: "0 !important" }}>
             {isMobile && (
               <IconButton
                 edge="start"
