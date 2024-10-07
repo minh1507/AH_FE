@@ -19,8 +19,14 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  InputBase,
+  Badge,
+  Container,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import WatchIcon from "@mui/icons-material/Watch";
 import Logo from "../assets/handle-logo.png";
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -36,36 +42,10 @@ const PortalModule = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const Footer = styled(Box)({
-    backgroundColor: "#ff4b7b",
-    padding: "20px",
-    textAlign: "center",
-    color: "#fff",
-  });
-
-  const FooterLink = styled(Link)({
-    color: "#fff",
-    textDecoration: "none",
-    margin: "0 10px",
-    '&:hover': {
-      textDecoration: "underline",
-    },
-  });
-
-  const PinkAppBar = styled(AppBar)(({ theme }) => ({
-    backgroundColor: "#ff4b7b",
+  const WhiteAppBar = styled(AppBar)(({ theme }) => ({
+    backgroundColor: "#ffffff", // White background
     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
   }));
-
-  const StyledButton = styled(Button)({
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: "16px",
-    marginLeft: "20px",
-    '&:hover': {
-      backgroundColor: "#ff668c",
-    },
-  });
 
   const LogoContainer = styled(Box)({
     display: "flex",
@@ -73,14 +53,29 @@ const PortalModule = () => {
     justifyContent: "center",
   });
 
+  const SearchContainer = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: "0 10px",
+    borderRadius: "4px",
+    marginLeft: "20px",
+    width: "40%",
+  });
+
+  const StyledInputBase = styled(InputBase)({
+    marginLeft: "8px",
+    flex: 1,
+  });
+
   const MainContainer = styled(Box)({
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh', // Ensure the container takes the full viewport height
+    minHeight: '100vh',
   });
 
   const ContentContainer = styled(Box)({
-    flexGrow: 1, // This makes the content area grow and push the footer down when content is small
+    flexGrow: 1,
   });
 
   const categories = [
@@ -106,40 +101,59 @@ const PortalModule = () => {
 
   return (
     <MainContainer>
-      <PinkAppBar position="static">
-        <Toolbar>
-          {isMobile && (
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer(true)}
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
+      <WhiteAppBar position="static">
+        <Container maxWidth="xl" sx={{ padding: "0 !important" }}>
+          <Toolbar>
+            {isMobile && (
+              <IconButton
+                edge="start"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+                sx={{ mr: 2, color: "#ff4b7b" }} // Light pink for menu icon
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
 
-          <LogoContainer>
-            <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", color: "inherit" }}>
-              <img
-                src={Logo}
-                alt="An Hoàng Store Logo"
-                style={{ height: "60px", marginRight: "10px" }}
+            {/* Logo */}
+            <LogoContainer>
+              <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", color: "inherit" }}>
+                <img
+                  src={Logo}
+                  alt="An Hoàng Store Logo"
+                  style={{ height: "60px", marginRight: "10px" }}
+                />
+                <Typography variant="h6" sx={{ display: { xs: "none", md: "block" }, color: "#ff4b7b" }}>
+                  An Hoàng Store
+                </Typography>
+              </Link>
+            </LogoContainer>
+
+            {/* Search Bar */}
+            <SearchContainer>
+              <SearchIcon sx={{ color: "#ff4b7b" }} /> {/* Light pink for search icon */}
+              <StyledInputBase
+                placeholder="Tìm kiếm sản phẩm…"
+                inputProps={{ 'aria-label': 'search' }}
               />
-              <Typography variant="h6" sx={{ display: { xs: "none", md: "block" } }}>
-                An Hoàng Store
-              </Typography>
-            </Link>
-          </LogoContainer>
+            </SearchContainer>
 
+            <Box sx={{ flexGrow: 1 }} />
 
-          <Box sx={{ flexGrow: 1 }} />
+            {/* Account and Cart Icons */}
+            <IconButton sx={{ color: "#ff4b7b" }} onClick={handleLoginOpen}> {/* Light pink for account icon */}
+              <AccountCircleIcon />
+            </IconButton>
+            <IconButton sx={{ color: "#ff4b7b" }}> {/* Light pink for cart icon */}
+              <Badge badgeContent={4} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </Container>
+      </WhiteAppBar>
 
-          <StyledButton onClick={handleLoginOpen}>Đăng nhập</StyledButton>
-        </Toolbar>
-      </PinkAppBar>
-
+      {/* Drawer for Mobile View */}
       <Drawer
         anchor="left"
         open={drawerOpen}
@@ -214,16 +228,6 @@ const PortalModule = () => {
         </Routes>
       </ContentContainer>
 
-      <Footer>
-        <Typography variant="body1">
-          © 2024 Bản quyền thuộc về An Hoàng Store.
-        </Typography>
-        <Box mt={2}>
-          <FooterLink to="/privacy">Chương trình giảm giá</FooterLink>
-          <FooterLink to="/terms">Quy định</FooterLink>
-          <FooterLink to="/faq">Về chúng tôi</FooterLink>
-        </Box>
-      </Footer>
     </MainContainer>
   );
 };

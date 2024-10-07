@@ -22,7 +22,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = styled(Box)(({ theme }) => ({
-  backgroundColor: "#ffe4e9",
+  backgroundColor: "white",
   padding: theme.spacing(3),
   borderRadius: "10px",
   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
@@ -35,10 +35,12 @@ const Sidebar = styled(Box)(({ theme }) => ({
 const CategoryListItem = styled(ListItem)(({ theme }) => ({
   transition: "background-color 0.3s ease",
   borderRadius: theme.shape.borderRadius,
+  cursor: "pointer",  // Add cursor pointer on hover
   "&:hover": {
-    backgroundColor: "#ffb3c6",
+    backgroundColor: "#ffe6ea",  // Light pink hover color
   },
 }));
+
 
 const ProductCard = styled(Paper)(({ theme }) => ({
   padding: "20px",
@@ -126,7 +128,7 @@ const Home = () => {
   return (
     <div>
       <Box sx={{ my: 3 }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl" sx={{padding: "0 !important"}}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Grid container spacing={3}>
@@ -185,7 +187,7 @@ const Home = () => {
             {!isMobile && (
               <Grid item xs={12} md={3}>
                 <Sidebar sx={{ height: "auto" }}>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography gutterBottom>
                     Danh mục
                   </Typography>
                   <List>
@@ -220,17 +222,9 @@ const Home = () => {
                           marginBottom: "10px",
                         }}
                       />
-                      <Typography variant="h6" gutterBottom>
+                      <Typography sx={{marginBottom: "10px !important"}} gutterBottom>
                         Đầm đen
                       </Typography>
-                      <CategoryPin
-                        color={
-                          categoriesWithColors[productId % categoriesWithColors.length]
-                            .color
-                        }
-                      >
-                        Váy
-                      </CategoryPin>
                       <Price variant="body1">100,000 VNĐ</Price>
                       <OriginalPrice variant="body2">150,000 VNĐ</OriginalPrice>
                     </ProductCard>
