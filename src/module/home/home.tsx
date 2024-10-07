@@ -67,17 +67,6 @@ const ProductCard = styled(Paper)(({ theme }) => ({
   },
 }));
 
-const CategoryPin = styled(Typography)(({ theme, color }) => ({
-  backgroundColor: color,
-  color: "white",
-  padding: "4px 12px",
-  borderRadius: "20px",
-  fontSize: "12px",
-  marginBottom: "12px !important",
-  width: "fit-content",
-  display: "inline-block",
-}));
-
 const OriginalPrice = styled(Typography)(({ theme }) => ({
   fontSize: "14px",
   textDecoration: "line-through",
@@ -276,12 +265,18 @@ const Home = () => {
 
             {/* Main grid view for products */}
             <Grid item xs={12} md={isMobile ? 12 : 9}>
-              <Grid container spacing={isMobile ? 2 : 3}>
+              <Grid
+                container
+                spacing={isMobile ? 2 : 3}
+              >
                 {Array.from(Array(40).keys()).map((productId) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={productId}>
+                  <Grid item xs={12} sm={6} md={3} lg={2} key={productId}>
                     <ProductCard
                       onClick={() => navigate(`/detail/${productId}`)}
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        width: isMobile ? "100%" : "auto", // Set width to 100% in mobile view
+                      }}
                     >
                       <img
                         src="https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp"
