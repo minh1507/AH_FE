@@ -15,10 +15,11 @@ import { useTitle } from "../../hook/title/title";
 import { styled, useTheme } from "@mui/system";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import WatchIcon from "@mui/icons-material/Watch";
-import Carousel from "react-material-ui-carousel"; 
+import Carousel from "react-material-ui-carousel";
 import { Paper as CarouselPaper } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = styled(Box)(({ theme }) => ({
   backgroundColor: "#ffe4e9",
@@ -53,13 +54,13 @@ const ProductCard = styled(Paper)(({ theme }) => ({
 }));
 
 const CategoryPin = styled(Typography)(({ theme, color }) => ({
-  backgroundColor: color, 
+  backgroundColor: color,
   color: "white",
   padding: "4px 12px",
   borderRadius: "20px",
   fontSize: "12px",
   marginBottom: "12px !important",
-  width: "fit-content", 
+  width: "fit-content",
   display: "inline-block",
 }));
 
@@ -93,6 +94,7 @@ const slides = [
 
 const Home = () => {
   useTitle("Home");
+  const navigate = useNavigate();
 
   const categories = [
     { name: "Váy", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
@@ -101,12 +103,12 @@ const Home = () => {
   ];
 
   const colors = [
-    "#4caf50", 
-    "#ff9800", 
-    "#2196f3", 
-    "#9c27b0", 
-    "#3f51b5", 
-    "#00bcd4", 
+    "#4caf50",
+    "#ff9800",
+    "#2196f3",
+    "#9c27b0",
+    "#3f51b5",
+    "#00bcd4",
   ];
 
   const assignRandomColorToCategories = (categories) => {
@@ -201,9 +203,12 @@ const Home = () => {
             {/* Main grid view for products */}
             <Grid item xs={12} md={isMobile ? 12 : 9}>
               <Grid container spacing={isMobile ? 2 : 3}>
-                {Array.from(Array(40).keys()).map((item) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={item}>
-                    <ProductCard>
+                {Array.from(Array(40).keys()).map((productId) => (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={productId}>
+                    <ProductCard
+                      onClick={() => navigate(`/detail/${productId}`)} // Use productId here
+                      style={{ cursor: 'pointer' }}
+                    >
                       <img
                         src="https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp"
                         alt="Product"
@@ -220,7 +225,7 @@ const Home = () => {
                       </Typography>
                       <CategoryPin
                         color={
-                          categoriesWithColors[item % categoriesWithColors.length]
+                          categoriesWithColors[productId % categoriesWithColors.length]
                             .color
                         }
                       >

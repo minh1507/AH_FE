@@ -14,7 +14,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Dialog, // Import Dialog components
+  Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
@@ -23,23 +23,24 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import WatchIcon from "@mui/icons-material/Watch";
 import Logo from "../assets/handle-logo.png";
-import useMediaQuery from '@mui/material/useMediaQuery'; // Import useMediaQuery for mobile view
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Detail from "./detail/detail";
 
 const Home = lazy(() => import("./home/home"));
 const About = lazy(() => import("./about/about"));
 const Contact = lazy(() => import("./contact/contact"));
 
 const PortalModule = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false); // State to control Drawer
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false); // State to control Login Dialog
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check if mobile view
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const Footer = styled(Box)({
     backgroundColor: "#ff4b7b",
     padding: "20px",
-    marginTop: "30px",
     textAlign: "center",
+    color: "#fff",
   });
 
   const FooterLink = styled(Link)({
@@ -72,14 +73,22 @@ const PortalModule = () => {
     justifyContent: "center",
   });
 
-  // Categories list for the drawer
+  const MainContainer = styled(Box)({
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh', // Ensure the container takes the full viewport height
+  });
+
+  const ContentContainer = styled(Box)({
+    flexGrow: 1, // This makes the content area grow and push the footer down when content is small
+  });
+
   const categories = [
     { name: "Váy", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
     { name: "Quần", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
     { name: "Áo", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
   ];
 
-  // Function to toggle the drawer
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -87,18 +96,16 @@ const PortalModule = () => {
     setDrawerOpen(open);
   };
 
-  // Function to open login dialog
   const handleLoginOpen = () => {
     setLoginDialogOpen(true);
   };
 
-  // Function to close login dialog
   const handleLoginClose = () => {
     setLoginDialogOpen(false);
   };
 
   return (
-    <>
+    <MainContainer>
       <PinkAppBar position="static">
         <Toolbar>
           {isMobile && (
@@ -106,7 +113,7 @@ const PortalModule = () => {
               edge="start"
               color="inherit"
               aria-label="menu"
-              onClick={toggleDrawer(true)} // Open drawer on click
+              onClick={toggleDrawer(true)}
               sx={{ mr: 2 }}
             >
               <MenuIcon />
@@ -114,32 +121,34 @@ const PortalModule = () => {
           )}
 
           <LogoContainer>
-            <img
-              src={Logo}
-              alt="An Hoàng Store Logo"
-              style={{ height: "60px", marginRight: "10px" }}
-            />
-            <Typography variant="h6" sx={{ display: { xs: "none", md: "block" } }}>
-              An Hoàng Store
-            </Typography>
+            <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", color: "inherit" }}>
+              <img
+                src={Logo}
+                alt="An Hoàng Store Logo"
+                style={{ height: "60px", marginRight: "10px" }}
+              />
+              <Typography variant="h6" sx={{ display: { xs: "none", md: "block" } }}>
+                An Hoàng Store
+              </Typography>
+            </Link>
           </LogoContainer>
+
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <StyledButton onClick={handleLoginOpen}>Đăng nhập</StyledButton> {/* Open login dialog */}
+          <StyledButton onClick={handleLoginOpen}>Đăng nhập</StyledButton>
         </Toolbar>
       </PinkAppBar>
 
-      {/* Drawer for mobile category list */}
       <Drawer
         anchor="left"
         open={drawerOpen}
-        onClose={toggleDrawer(false)} // Close drawer on backdrop click
+        onClose={toggleDrawer(false)}
       >
         <Box
           sx={{ width: 250 }}
           role="presentation"
-          onClick={toggleDrawer(false)} // Close drawer on category click
+          onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
           <List>
@@ -161,17 +170,17 @@ const PortalModule = () => {
         onClose={handleLoginClose}
         sx={{
           '& .MuiDialog-paper': {
-            borderRadius: '15px', // Rounded corners
-            padding: '20px', // Padding inside the dialog
-            backgroundColor: '#ffffff', // Background color
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)', // Add some shadow for depth
+            borderRadius: '15px',
+            padding: '20px',
+            backgroundColor: '#ffffff',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
           },
         }}
       >
         <DialogTitle sx={{ fontWeight: 'bold', fontSize: '1.5rem', textAlign: 'center', padding: "0 !important" }}>
           Đăng nhập
         </DialogTitle>
-        <DialogContent sx={{padding: "0 !important"}}>
+        <DialogContent sx={{ padding: "0 !important" }}>
           <TextField
             autoFocus
             margin="dense"
@@ -189,19 +198,21 @@ const PortalModule = () => {
             sx={{ mb: 2 }}
           />
         </DialogContent>
-        <DialogActions sx={{padding: "0 !important"}}>
+        <DialogActions sx={{ padding: "0 !important" }}>
           <Button fullWidth onClick={handleLoginClose} variant="contained" color="primary">
             Đăng nhập
           </Button>
         </DialogActions>
       </Dialog>
 
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+      <ContentContainer>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/detail/:id" element={<Detail />} />
+        </Routes>
+      </ContentContainer>
 
       <Footer>
         <Typography variant="body1">
@@ -213,8 +224,8 @@ const PortalModule = () => {
           <FooterLink to="/faq">Về chúng tôi</FooterLink>
         </Box>
       </Footer>
-    </>
+    </MainContainer>
   );
-}
+};
 
 export default PortalModule;
