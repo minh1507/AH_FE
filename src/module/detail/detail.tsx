@@ -9,9 +9,11 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite'; // Optional: Add a favorite icon for better UI
+import { useTitle } from "../../hook/title/title";
 
 const Detail = () => {
   const { id } = useParams();
+  useTitle("Xem chi tiết");
 
   // Sample product data, replace with your actual data fetching logic
   const product = {

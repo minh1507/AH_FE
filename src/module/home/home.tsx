@@ -93,7 +93,7 @@ const slides = [
 ];
 
 const Home = () => {
-  useTitle("Home");
+  useTitle("Trang chủ");
   const navigate = useNavigate();
 
   const categories = [
