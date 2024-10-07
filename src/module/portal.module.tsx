@@ -129,14 +129,16 @@ const PortalModule = () => {
               </Link>
             </LogoContainer>
 
-            {/* Search Bar */}
-            <SearchContainer>
-              <SearchIcon sx={{ color: "#ff4b7b" }} /> {/* Light pink for search icon */}
-              <StyledInputBase
-                placeholder="Tìm kiếm sản phẩm…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </SearchContainer>
+            {/* Conditionally render Search Bar based on screen size */}
+            {!isMobile && (
+              <SearchContainer>
+                <SearchIcon sx={{ color: "#ff4b7b" }} /> {/* Light pink for search icon */}
+                <StyledInputBase
+                  placeholder="Tìm kiếm sản phẩm…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </SearchContainer>
+            )}
 
             <Box sx={{ flexGrow: 1 }} />
 

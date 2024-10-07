@@ -26,7 +26,11 @@ const Sidebar = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   borderRadius: "10px",
   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-  height: "100%",
+  height: "calc(100% - 24px)", // Adjust height for margins
+  position: "sticky", // Sticky positioning
+  top: "24px", // Sticks to the top
+  zIndex: 1000, // Ensures it appears on top of other elements
+  overflowY: "auto", // Enable vertical scrolling
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(2),
   },
@@ -35,12 +39,11 @@ const Sidebar = styled(Box)(({ theme }) => ({
 const CategoryListItem = styled(ListItem)(({ theme }) => ({
   transition: "background-color 0.3s ease",
   borderRadius: theme.shape.borderRadius,
-  cursor: "pointer",  // Add cursor pointer on hover
+  cursor: "pointer",
   "&:hover": {
-    backgroundColor: "#ffe6ea",  // Light pink hover color
+    backgroundColor: "#ffe6ea",
   },
 }));
-
 
 const ProductCard = styled(Paper)(({ theme }) => ({
   padding: "20px",
@@ -128,7 +131,7 @@ const Home = () => {
   return (
     <div>
       <Box sx={{ my: 3 }}>
-        <Container maxWidth="xl" sx={{padding: "0 !important"}}>
+        <Container maxWidth="xl" sx={{ padding: "0 !important" }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Grid container spacing={3}>
@@ -183,13 +186,69 @@ const Home = () => {
               </Grid>
             </Grid>
 
+            {/* Menu Bar below the Banner and Slideshow */}
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  padding: theme.spacing(2),
+                  borderRadius: "10px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+                  display: "flex",
+                  alignItems: "left",
+                  marginY: theme.spacing(2),
+                }}
+              >
+                <Button
+                  variant="text"
+                  sx={{
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "#ffe6ea",
+                    },
+                  }}
+                >
+                  Gia đình
+                </Button>
+                <Button 
+                  variant="text"
+                  sx={{
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "#ffe6ea",
+                    },
+                  }}
+                >
+                  Bãi biển
+                </Button>
+                <Button 
+                  variant="text"
+                  sx={{
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "#ffe6ea",
+                    },
+                  }}>
+                  Công sở
+                </Button>
+                <Button 
+                  variant="text"
+                  sx={{
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "#ffe6ea",
+                    },
+                  }}>
+                  Tiệc tùng
+                </Button>
+              </Box>
+            </Grid>
+
             {/* Conditionally render the category sidebar only for non-mobile views */}
             {!isMobile && (
               <Grid item xs={12} md={3}>
                 <Sidebar sx={{ height: "auto" }}>
-                  <Typography gutterBottom>
-                    Danh mục
-                  </Typography>
+                  <Typography gutterBottom>Danh mục</Typography>
                   <List>
                     {categoriesWithColors.map((category, index) => (
                       <CategoryListItem key={index}>
@@ -208,8 +267,8 @@ const Home = () => {
                 {Array.from(Array(40).keys()).map((productId) => (
                   <Grid item xs={12} sm={6} md={4} lg={3} key={productId}>
                     <ProductCard
-                      onClick={() => navigate(`/detail/${productId}`)} // Use productId here
-                      style={{ cursor: 'pointer' }}
+                      onClick={() => navigate(`/detail/${productId}`)}
+                      style={{ cursor: "pointer" }}
                     >
                       <img
                         src="https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp"
@@ -222,7 +281,7 @@ const Home = () => {
                           marginBottom: "10px",
                         }}
                       />
-                      <Typography sx={{marginBottom: "10px !important"}} gutterBottom>
+                      <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
                         Đầm đen
                       </Typography>
                       <Price variant="body1">100,000 VNĐ</Price>
