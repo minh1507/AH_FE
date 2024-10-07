@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Divider,
 } from "@mui/material";
 import { useTitle } from "../../hook/title/title";
 import { styled, useTheme } from "@mui/system";
@@ -43,6 +44,14 @@ const CategoryListItem = styled(ListItem)(({ theme }) => ({
   "&:hover": {
     backgroundColor: "#ffe6ea",
   },
+}));
+
+const CompanyCard = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginTop: theme.spacing(3),
+  backgroundColor: "white",
+  borderRadius: "10px",
+  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
 }));
 
 const ProductCard = styled(Paper)(({ theme }) => ({
@@ -127,6 +136,7 @@ const Home = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
 
   return (
     <div>
@@ -293,8 +303,93 @@ const Home = () => {
                   </Grid>
                 ))}
               </Grid>
+
+              <CompanyCard>
+                <Typography sx={{ fontSize: "1.1rem" }} gutterBottom>
+                  Công ty THHH An Hoàng
+                </Typography>
+                <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
+                  Tòa nhà số 1 đường ..., quận ..., thành phố Hà Nội
+                </Typography>
+                <Typography sx={{ fontSize: "0.9rem" }} variant="body1">
+                  Hotline: ...
+                </Typography>
+
+                <Divider sx={{ marginY: 2 }} />
+
+                <Typography sx={{ fontSize: "1.1rem" }} gutterBottom>
+                  Thương Hiệu Nổi Bật
+                </Typography>
+                <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
+                  vascara
+                  /
+                  dior
+                  /
+                  esteelauder
+                  /
+                  th truemilk
+                  /
+                  barbie
+                  /
+                  owen
+                  /
+                  ensure
+                  /
+                  durex
+                  /
+                  bioderma
+                  /
+                  elly
+                  /
+                  milo
+                  /
+                  skechers
+                  /
+                  aldo
+                  /
+                  triumph
+                  /
+                  nutifood
+                  /
+                  kindle
+                  /
+                  nerman
+                  /
+                  wacom
+                  /
+                  anessa
+                  /
+                  yoosee
+                  /
+                  olay
+                  /
+                  similac
+                  /
+                  comfort
+                  /
+                  bitas
+                  /
+                  shiseido
+                  /
+                  langfarm
+                  /
+                  hukan
+                  /
+                  vichy
+                  /
+                  fila
+                  /
+                  tsubaki
+
+                </Typography>
+              </CompanyCard>
+
+
+
             </Grid>
           </Grid>
+
+
         </Container>
       </Box>
     </div>
