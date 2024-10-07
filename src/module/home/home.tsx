@@ -11,6 +11,8 @@ import {
   ListItemText,
   ListItemIcon,
   Divider,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { useTitle } from "../../hook/title/title";
 import { styled, useTheme } from "@mui/system";
@@ -265,11 +267,106 @@ const Home = () => {
 
             {/* Main grid view for products */}
             <Grid item xs={12} md={isMobile ? 12 : 9}>
+            <Card sx={{ backgroundColor: 'white', boxShadow: 2, mb: 2 }}>
+                <CardContent>
+                  <Typography sx={{margin: "0 !important"}} gutterBottom variant="h6" component="div">
+                    Bán chạy
+                  </Typography>
+                  {/* You can add more content here if needed */}
+                </CardContent>
+              </Card>
+
               <Grid
                 container
                 spacing={isMobile ? 2 : 3}
               >
-                {Array.from(Array(40).keys()).map((productId) => (
+                {Array.from(Array(12).keys()).map((productId) => (
+                  <Grid item xs={12} sm={6} md={3} lg={2} key={productId}>
+                    <ProductCard
+                      onClick={() => navigate(`/detail/${productId}`)}
+                      style={{
+                        cursor: "pointer",
+                        width: isMobile ? "100%" : "auto", // Set width to 100% in mobile view
+                      }}
+                    >
+                      <img
+                        src="https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp"
+                        alt="Product"
+                        width="100%"
+                        style={{
+                          height: "150px",
+                          objectFit: "contain",
+                          borderRadius: "10px",
+                          marginBottom: "10px",
+                        }}
+                      />
+                      <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
+                        Đầm đen
+                      </Typography>
+                      <Price variant="body1">100,000 VNĐ</Price>
+                      <OriginalPrice variant="body2">150,000 VNĐ</OriginalPrice>
+                    </ProductCard>
+                  </Grid>
+                ))}
+              </Grid>
+
+              <Card sx={{ backgroundColor: 'white', boxShadow: 2, mb: 2, mt: 2 }}>
+                <CardContent>
+                  <Typography sx={{margin: "0 !important"}} gutterBottom variant="h6" component="div">
+                    Xu hướng
+                  </Typography>
+                  {/* You can add more content here if needed */}
+                </CardContent>
+              </Card>
+
+              <Grid
+                container
+                spacing={isMobile ? 2 : 3}
+              >
+                {Array.from(Array(12).keys()).map((productId) => (
+                  <Grid item xs={12} sm={6} md={3} lg={2} key={productId}>
+                    <ProductCard
+                      onClick={() => navigate(`/detail/${productId}`)}
+                      style={{
+                        cursor: "pointer",
+                        width: isMobile ? "100%" : "auto", // Set width to 100% in mobile view
+                      }}
+                    >
+                      <img
+                        src="https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp"
+                        alt="Product"
+                        width="100%"
+                        style={{
+                          height: "150px",
+                          objectFit: "contain",
+                          borderRadius: "10px",
+                          marginBottom: "10px",
+                        }}
+                      />
+                      <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
+                        Đầm đen
+                      </Typography>
+                      <Price variant="body1">100,000 VNĐ</Price>
+                      <OriginalPrice variant="body2">150,000 VNĐ</OriginalPrice>
+                    </ProductCard>
+                  </Grid>
+                ))}
+              </Grid>
+
+              <Card sx={{ backgroundColor: 'white', boxShadow: 2, mb: 2, mt: 2 }}>
+                <CardContent>
+                  <Typography sx={{margin: "0 !important"}} gutterBottom variant="h6" component="div">
+                    Phổ biến
+                  </Typography>
+                  {/* You can add more content here if needed */}
+                </CardContent>
+              </Card>
+
+              <Grid
+                container
+                spacing={isMobile ? 2 : 3}
+              >
+                {Array.from(Array(12).keys()).map((productId) => (
                   <Grid item xs={12} sm={6} md={3} lg={2} key={productId}>
                     <ProductCard
                       onClick={() => navigate(`/detail/${productId}`)}
