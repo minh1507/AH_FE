@@ -9,11 +9,6 @@ import {
   Typography,
   Button,
   IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -27,7 +22,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import WatchIcon from "@mui/icons-material/Watch";
 import Logo from "../assets/handle-logo.png";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Detail from "./detail/detail";
@@ -64,10 +58,18 @@ const PortalModule = () => {
     width: "40%",
   });
 
-  const StyledInputBase = styled(InputBase)({
-    marginLeft: "8px",
-    flex: 1,
-  });
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    border: '2px solid transparent', // Default border
+    borderRadius: '4px', // Optional: add some border radius
+    padding: '8px 12px', // Adjust padding as needed
+    transition: 'border-color 0.3s ease', // Smooth transition for border color
+
+    // Change border color on focus
+    '&:focus': {
+      border: '2px solid #ff4b7b', // Pink border on focus
+      outline: 'none', // Remove default outline
+    },
+  }));
 
   const MainContainer = styled(Box)({
     display: 'flex',
@@ -78,12 +80,6 @@ const PortalModule = () => {
   const ContentContainer = styled(Box)({
     flexGrow: 1,
   });
-
-  const categories = [
-    { name: "Váy", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
-    { name: "Quần", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
-    { name: "Áo", icon: <WatchIcon style={{ color: "#ff4b7b" }} /> },
-  ];
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -103,7 +99,7 @@ const PortalModule = () => {
   return (
     <MainContainer>
       <WhiteAppBar position="static">
-        <Container maxWidth="xl" sx={{ padding: "0 !important" }}>
+        <Container maxWidth="lg" sx={{ padding: "0 !important" }}>
           <Toolbar sx={{ padding: "0 !important" }}>
             {isMobile && (
               <IconButton
@@ -122,7 +118,7 @@ const PortalModule = () => {
                 <img
                   src={Logo}
                   alt="An Hoàng Store Logo"
-                  style={{ height: "60px", marginRight: "10px" }}
+                  style={{ height: "100px", marginRight: "10px" }} // Huge logo height
                 />
                 <Typography variant="h6" sx={{ display: { xs: "none", md: "block" }, color: "#ff4b7b" }}>
                   An Hoàng Store
@@ -132,11 +128,12 @@ const PortalModule = () => {
 
             {/* Conditionally render Search Bar based on screen size */}
             {!isMobile && (
-              <SearchContainer>
+              <SearchContainer sx={{ display: 'flex', alignItems: 'center', ml: 3 }}> {/* Added margin left for spacing */}
                 <SearchIcon sx={{ color: "#ff4b7b" }} /> {/* Light pink for search icon */}
                 <StyledInputBase
                   placeholder="Tìm kiếm sản phẩm…"
                   inputProps={{ 'aria-label': 'search' }}
+                  sx={{ ml: 1 }} // Added margin for better spacing
                 />
               </SearchContainer>
             )}
@@ -156,32 +153,6 @@ const PortalModule = () => {
         </Container>
       </WhiteAppBar>
 
-      {/* Drawer for Mobile View */}
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={toggleDrawer(false)}
-      >
-        <Box
-          sx={{ width: 250 }}
-          role="presentation"
-          onClick={toggleDrawer(false)}
-          onKeyDown={toggleDrawer(false)}
-        >
-          <List>
-            {categories.map((category, index) => (
-              <ListItem button key={index}>
-                <ListItemIcon>
-                  {category.icon}
-                </ListItemIcon>
-                <ListItemText primary={category.name} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
-
-      {/* Login Dialog */}
       <Dialog
         open={loginDialogOpen}
         onClose={handleLoginClose}
