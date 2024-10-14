@@ -25,6 +25,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Logo from "../assets/handle-logo.png";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Detail from "./detail/detail";
+import Cart from "./cart/cart";
 
 const Home = lazy(() => import("./home/home"));
 const About = lazy(() => import("./about/about"));
@@ -144,7 +145,7 @@ const PortalModule = () => {
             <IconButton sx={{ color: "#ff4b7b" }} onClick={handleLoginOpen}> {/* Light pink for account icon */}
               <AccountCircleIcon />
             </IconButton>
-            <IconButton sx={{ color: "#ff4b7b" }}> {/* Light pink for cart icon */}
+            <IconButton sx={{ color: "#ff4b7b" }} component={Link} to="/cart"> {/* Light pink for cart icon */}
               <Badge badgeContent={4} color="error">
                 <ShoppingCartIcon />
               </Badge>
@@ -199,6 +200,7 @@ const PortalModule = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </ContentContainer>
 

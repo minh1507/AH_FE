@@ -106,49 +106,6 @@ const Detail = () => {
               </Typography>
             </CardContent>
           </Card>
-
-          {/* Relevant Products */}
-          <Typography variant="h6" sx={{ mt: 3, fontWeight: 'bold', color: '#333' }}>
-            Sản phẩm liên quan
-          </Typography>
-          <Grid item xs={12}>
-            <Grid
-              container
-              spacing={isMobile ? 2 : 3}  // Adjust spacing based on mobile or desktop
-            >
-              {Array.from(Array(8).keys()).map((productId) => (
-                <Grid item xs={12} sm={12} md={4} lg={3} key={productId}>  {/* Responsive grid settings */}
-                  <ProductCard
-                    onClick={() => navigate(`/detail/${productId}`)}  // Click to navigate to product detail page
-                    style={{
-                      cursor: "pointer",
-                      width: isMobile ? "100%" : "auto",  // 100% width in mobile view
-                    }}
-                  >
-                    <img
-                      src="https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp"  // Product image
-                      alt="Product"
-                      width="100%"
-                      style={{
-                        height: "150px",  // Fixed height for consistent display
-                        objectFit: "contain",  // Ensure image fits well without being cropped
-                        borderRadius: "10px",  // Rounded corners for images
-                        marginBottom: "10px",  // Spacing between image and text
-                      }}
-                    />
-                    <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
-                      Đầm đen  {/* Product name */}
-                    </Typography>
-                    <Price variant="body1">100,000 VNĐ</Price>  {/* Price with bold styling */}
-                    <OriginalPrice variant="body2" sx={{ textDecoration: "line-through", color: 'grey' }}>
-                      150,000 VNĐ  {/* Original price with strike-through */}
-                    </OriginalPrice>
-                  </ProductCard>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-
         </Grid>
 
 
