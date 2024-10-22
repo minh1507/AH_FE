@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -16,6 +16,7 @@ import { Paper as CarouselPaper } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
+import { CategoryService } from "../../service/category";
 
 const CompanyCard = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -67,11 +68,22 @@ const slides = [
 ];
 
 const Home = () => {
+  const [categories, setCategories] = useState([])
+
   useTitle("Trang chủ");
   const navigate = useNavigate();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  useEffect(() => {
+    findAll()
+  }, []);
+
+  const findAll = async () => {
+    const categories = await CategoryService.findAll()
+    setCategories(categories)
+  }
 
   return (
     <div>
@@ -145,7 +157,8 @@ const Home = () => {
                     marginY: theme.spacing(2),
                   }}
                 >
-                  <Button
+                  {categories.map((prop) => (
+                    <Button
                     variant="text"
                     sx={{
                       color: "black",
@@ -154,39 +167,9 @@ const Home = () => {
                       },
                     }}
                   >
-                    Gia đình
+                    {prop.name}
                   </Button>
-                  <Button
-                    variant="text"
-                    sx={{
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "#ffe6ea",
-                      },
-                    }}
-                  >
-                    Bãi biển
-                  </Button>
-                  <Button
-                    variant="text"
-                    sx={{
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "#ffe6ea",
-                      },
-                    }}>
-                    Công sở
-                  </Button>
-                  <Button
-                    variant="text"
-                    sx={{
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "#ffe6ea",
-                      },
-                    }}>
-                    Tiệc tùng
-                  </Button>
+                  ))}
                 </Box>
               </Grid>
             )}
