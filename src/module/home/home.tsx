@@ -11,11 +11,8 @@ import {
 import { useTitle } from "../../hook/title/title";
 import { styled, useTheme } from "@mui/system";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Carousel from "react-material-ui-carousel";
-import { Paper as CarouselPaper } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
+import im from "../../assets/download.jfif"
 import { CategoryService } from "../../service/category";
 
 const CompanyCard = styled(Paper)(({ theme }) => ({
@@ -52,21 +49,6 @@ const Price = styled(Typography)(({ theme }) => ({
   marginTop: "10px",
 }));
 
-const slides = [
-  {
-    image: "https://cf.shopee.vn/file/sg-11134258-7rdx2-m0wtplzv4ypw68_xxhdpi",
-    alt: "Slide 1",
-  },
-  {
-    image: "https://cf.shopee.vn/file/sg-11134258-7rdx2-m0wtplzv4ypw68_xxhdpi",
-    alt: "Slide 2",
-  },
-  {
-    image: "https://cf.shopee.vn/file/sg-11134258-7rdx2-m0wtplzv4ypw68_xxhdpi",
-    alt: "Slide 3",
-  },
-];
-
 const Home = () => {
   const [categories, setCategories] = useState([])
 
@@ -87,61 +69,20 @@ const Home = () => {
 
   return (
     <div>
-      <Box sx={{ my: 3 }}>
+      <Box sx={{ my: 3 }} sx={{ padding: "0 !important" }}>
+        <Grid item xs={12} sx={{ padding: "0 !important" }}>
+          <Paper>
+            <img
+              src={im}
+              alt="Banner 2"
+              width="100%"
+              style={{ height: "auto", objectFit: "cover" }}
+            />
+          </Paper>
+        </Grid>
         <Container maxWidth="lg" sx={{ padding: "0 !important" }}>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                  <Carousel
-                    indicators={false}
-                    navButtonsAlwaysVisible
-                    NextIcon={<ArrowForwardIcon />}
-                    PrevIcon={<ArrowBackIcon />}
-                  >
-                    {slides.map((slide, index) => (
-                      <CarouselPaper key={index}>
-                        <img
-                          src={slide.image}
-                          alt={slide.alt}
-                          width="100%"
-                          style={{
-                            height: isMobile ? "200px" : "300px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </CarouselPaper>
-                    ))}
-                  </Carousel>
-                </Grid>
-                {!isMobile && (
-                  <Grid item xs={12} md={6}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <Paper>
-                          <img
-                            src="https://cf.shopee.vn/file/sg-11134258-7rdx2-m0wtplzv4ypw68_xxhdpi"
-                            alt="Banner 1"
-                            width="100%"
-                            style={{ height: "150px", objectFit: "cover" }}
-                          />
-                        </Paper>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Paper>
-                          <img
-                            src="https://cf.shopee.vn/file/sg-11134258-7rdx2-m0wtplzv4ypw68_xxhdpi"
-                            alt="Banner 2"
-                            width="100%"
-                            style={{ height: "150px", objectFit: "cover" }}
-                          />
-                        </Paper>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                )}
-              </Grid>
-            </Grid>
+
 
             {/* Menu Bar below the Banner and Slideshow */}
             {!isMobile && (
@@ -159,16 +100,16 @@ const Home = () => {
                 >
                   {categories.map((prop) => (
                     <Button
-                    variant="text"
-                    sx={{
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "#ffe6ea",
-                      },
-                    }}
-                  >
-                    {prop.name}
-                  </Button>
+                      variant="text"
+                      sx={{
+                        color: "black",
+                        "&:hover": {
+                          backgroundColor: "#ffe6ea",
+                        },
+                      }}
+                    >
+                      {prop.name}
+                    </Button>
                   ))}
                 </Box>
               </Grid>
