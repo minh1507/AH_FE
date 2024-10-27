@@ -14,6 +14,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from "react-router-dom";
 import im from "../../assets/download.jfif"
 import { CategoryService } from "../../service/category";
+import { ProductService } from "../../service/product";
 
 const CompanyCard = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -50,7 +51,9 @@ const Price = styled(Typography)(({ theme }) => ({
 }));
 
 const Home = () => {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState<any[]>([])
+  const [products, setproducts] = useState<any[]>([])
+  const [cat, setcat] = useState<any>()
 
   useTitle("Trang chủ");
   const navigate = useNavigate();
@@ -64,13 +67,20 @@ const Home = () => {
 
   const findAll = async () => {
     const categories = await CategoryService.findAll()
+    const products = await ProductService.findAll(categories[0]?.id)
     setCategories(categories)
+    setproducts(products)
+  }
+
+  const handleCat = async (id: any) => {
+    const products = await ProductService.findAll(id)
+    setproducts(products)
   }
 
   return (
     <div>
-      <Box sx={{ my: 3 }} sx={{ padding: "0 !important" }}>
-        <Grid item xs={12} sx={{ padding: "0 !important" }}>
+      <Box sx={{ my: 3 }} sx ={{ padding: "0 !important" }}>
+        <Grid item xs={12} sx ={{ padding: "0 !important" }}>
           <Paper>
             <img
               src={im}
@@ -107,6 +117,7 @@ const Home = () => {
                           backgroundColor: "#ffe6ea",
                         },
                       }}
+                      onClick={() => handleCat(prop.id)}
                     >
                       {prop.name}
                     </Button>
@@ -120,17 +131,17 @@ const Home = () => {
                 container
                 spacing={isMobile ? 2 : 3}
               >
-                {Array.from(Array(12).keys()).map((productId) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={productId}>
+                {products.map((product) => (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                     <ProductCard
-                      onClick={() => navigate(`/detail/${productId}`)}
+                      onClick={() => navigate(`/detail/${product.id}`)}
                       style={{
                         cursor: "pointer",
                         width: isMobile ? "100%" : "auto", // Set width to 100% in mobile view
                       }}
                     >
                       <img
-                        src="https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp"
+                        src={product.imageURL}
                         alt="Product"
                         width="100%"
                         style={{
@@ -141,10 +152,10 @@ const Home = () => {
                         }}
                       />
                       <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
-                        Đầm đen
+                        {product.title}
                       </Typography>
-                      <Price variant="body1">100,000 VNĐ</Price>
-                      <OriginalPrice variant="body2">150,000 VNĐ</OriginalPrice>
+                      <Price variant="body1">{product.newPrice} VNĐ</Price>
+                      <OriginalPrice variant="body2">{product.oldPrice} VNĐ</OriginalPrice>
                     </ProductCard>
                   </Grid>
                 ))}
