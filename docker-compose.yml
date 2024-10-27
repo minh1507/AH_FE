@@ -3,10 +3,10 @@ services:
   ah:
     build: .
     ports:
-      - "4500:4000"
+      - "4500:443"
     volumes:
       - .:/ah
       - /ah/node_modules
     environment:
       - NODE_ENV=development
-      
+
