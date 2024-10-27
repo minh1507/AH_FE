@@ -77,6 +77,14 @@ const Home = () => {
     setproducts(products)
   }
 
+  const formatPrice = (price: any) => {
+    return price.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 0, // Adjust based on whether you want to show decimal places
+      maximumFractionDigits: 0
+    });
+  };
+
   return (
     <div>
       <Box sx={{ my: 3 }} sx ={{ padding: "0 !important" }}>
@@ -154,8 +162,8 @@ const Home = () => {
                       <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
                         {product.title}
                       </Typography>
-                      <Price variant="body1">{product.newPrice} VNĐ</Price>
-                      <OriginalPrice variant="body2">{product.oldPrice} VNĐ</OriginalPrice>
+                      <Price variant="body1">{formatPrice(product.newPrice)} VNĐ</Price>
+                      <OriginalPrice variant="body2">{formatPrice(product.oldPrice)} VNĐ</OriginalPrice>
                     </ProductCard>
                   </Grid>
                 ))}
