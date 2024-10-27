@@ -8,6 +8,8 @@ export default defineConfig({
     port: 5173, // Your Vite server port
     hmr: {
       host: 'anhoangstore.xyz', // Use your domain here
+      port: 443,
+      protocol: 'wss'
     },
     cors: {
       origin: 'https://anhoangstore.xyz', // Allow your domain
