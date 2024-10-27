@@ -3,7 +3,7 @@ services:
   ah:
     build: .
     ports:
-      - "4500:443"
+      - "4500:5173"
     volumes:
       - .:/ah
       - /ah/node_modules
