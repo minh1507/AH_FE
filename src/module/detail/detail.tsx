@@ -14,9 +14,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTitle } from "../../hook/title/title";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { ProductService } from "../../service/product";
+import { useRecoilState } from "recoil";
+import { cartState } from "../cart/state";
 
 const Detail = () => {
   const [product, setProduct] = useState<any>()
+  const [carts, setCarts] = useRecoilState<any[]>(cartState);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const { id } = useParams();
   useTitle("Xem chi tiết");
@@ -32,10 +36,32 @@ const Detail = () => {
     setProduct(product)
   }
 
+  const handleCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const elementIndex = carts.findIndex((i: any) => i.id === id);
+  
+    if (elementIndex !== -1) {
+      // Tạo bản sao mới của carts
+      const updatedCarts = [...carts];
+      
+      // Tạo bản sao của sản phẩm cần thay đổi để tránh lỗi immutable
+      const updatedProduct = { ...updatedCarts[elementIndex], count: updatedCarts[elementIndex].count + quantity };
+      
+      // Thay thế sản phẩm cũ bằng sản phẩm mới trong updatedCarts
+      updatedCarts[elementIndex] = updatedProduct;
+      
+      // Cập nhật lại state carts
+      setCarts(updatedCarts);
+    } else {
+      setCarts([...carts, { ...product, id: id, count: quantity }]);
+    }
+  };
+  
+
   const formatPrice = (price: any) => {
     return price.toLocaleString('en-US', {
       style: 'decimal',
-      minimumFractionDigits: 0, // Adjust based on whether you want to show decimal places
+      minimumFractionDigits: 0, 
       maximumFractionDigits: 0
     });
   };
@@ -92,6 +118,8 @@ const Detail = () => {
                   label="Số lượng"
                   type="number"
                   variant="outlined"
+                  value={quantity} 
+                  onChange={(e) => setQuantity(Number(e.target.value))}
                   InputProps={{
                     inputProps: { min: 1 },
                     startAdornment: (
@@ -106,7 +134,7 @@ const Detail = () => {
                 <Button variant="contained" color="primary" sx={{ mt: 1, width: '100%' }}>
                   Mua ngay
                 </Button>
-                <Button variant="outlined" color="primary" sx={{ mt: 1, width: '100%' }}>
+                <Button onClick={(e) => handleCart(e)} variant="outlined" color="primary" sx={{ mt: 1, width: '100%' }}>
                   Thêm vào giỏ hàng
                 </Button>
               </Box>

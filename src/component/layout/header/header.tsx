@@ -9,14 +9,14 @@ import {Badge} from "primereact/badge";
 import { useCookies } from "react-cookie";
 import useToast from "../../../hook/toast/toast";
 import { useRecoilState } from "recoil";
-import { authState } from "../../../module/auth/state";
+import { cartState } from "../../../module/cart/state";
 
 function Header() {
   const { showToast } = useToast();
   const [cookies, setCookie, removeCookie] = useCookies(["ACCESS_TOKEN"]);
+  const [carts, setCarts] = useRecoilState(cartState);
   const navigation = useNavigate();
   const menu = useRef<Menu>(null);
-  const [auth, setAuth] = useRecoilState(authState);
   const itemsMenuRight = [
     {
       template: (item: any, options: any) => {
@@ -94,7 +94,7 @@ function Header() {
       />
       <section>
         <i className="pi pi-bell p-overlay-badge">
-          <Badge value="2"></Badge>
+          <Badge value={carts.length}></Badge>
         </i>
         <Avatar
             className='ml-4'

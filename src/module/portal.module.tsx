@@ -26,6 +26,8 @@ import Logo from "../assets/handle-logo.png";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Detail from "./detail/detail";
 import Cart from "./cart/cart";
+import { useRecoilState } from "recoil";
+import { cartState } from "./cart/state";
 
 const Home = lazy(() => import("./home/home"));
 const About = lazy(() => import("./about/about"));
@@ -97,6 +99,8 @@ const PortalModule = () => {
     setLoginDialogOpen(false);
   };
 
+  const [carts, setCarts] = useRecoilState(cartState);
+
   return (
     <MainContainer>
       <WhiteAppBar position="static">
@@ -141,12 +145,11 @@ const PortalModule = () => {
 
             <Box sx={{ flexGrow: 1 }} />
 
-            {/* Account and Cart Icons */}
-            <IconButton sx={{ color: "#ff4b7b" }} onClick={handleLoginOpen}> {/* Light pink for account icon */}
+            <IconButton sx={{ color: "#ff4b7b" }} onClick={handleLoginOpen}> 
               <AccountCircleIcon />
             </IconButton>
-            <IconButton sx={{ color: "#ff4b7b" }} component={Link} to="/cart"> {/* Light pink for cart icon */}
-              <Badge badgeContent={4} color="error">
+            <IconButton sx={{ color: "#ff4b7b" }} component={Link} to="/cart"> 
+              <Badge badgeContent={carts.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

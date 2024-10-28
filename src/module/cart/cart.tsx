@@ -14,35 +14,32 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import { useRecoilState } from 'recoil';
+import { cartState } from './state';
+import { useNavigate } from 'react-router-dom';
+import { Navigation } from '@mui/icons-material';
 
 const Cart = () => {
   // Fake data for cart items
-  const cartItems = [
-    {
-      id: 1,
-      name: "Đầm Đen",
-      price: 100000, // Stored as a number
-      originalPrice: 150000, // Original price for showing discount
-      description: "Đầm đen sang trọng, phù hợp cho các buổi tiệc.",
-      image: "https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp",
-    },
-    {
-      id: 2,
-      name: "Áo Trắng",
-      price: 200000,
-      originalPrice: 250000,
-      description: "Áo trắng thanh lịch, chất liệu cotton thoáng mát.",
-      image: "https://via.placeholder.com/150", // Placeholder image
-    },
-  ];
+  const [carts, setCarts] = useRecoilState<any[]>(cartState);
+  const navigate = useNavigate()
 
   const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.price, 0);
+    return carts.reduce((total, item) => total + (item.price * item.count), 0);
   };
+
+  const deleted = (id: number) => {
+    const updatedCarts = carts.filter((item) => item.id !== id);
+    setCarts(updatedCarts);
+  }
+
+  const navigations = (id: number) => {
+    navigate("/detail/"+id)
+  }
 
   return (
     <Box sx={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', mt: 4 }}>
-      {cartItems.length === 0 ? (
+      {carts.length === 0 ? (
         <Box sx={{ textAlign: 'center', mt: 5 }}>
           <Typography variant="body1" sx={{ mb: 4 }}>
             Hiện tại giỏ hàng của bạn đang trống.
@@ -55,14 +52,14 @@ const Cart = () => {
         <>
           {/* Cart items grid layout */}
           <Grid container spacing={3}>
-            {cartItems.map((item) => (
+            {carts.map((item) => (
               <Grid item xs={12} key={item.id}>
                 <Card sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                   {/* Product image on the left */}
                   <CardMedia
                     component="img"
                     sx={{ width: 200 }} // Adjust the width for the image
-                    image={item.image}
+                    image={item.imageURL}
                     alt={item.name}
                   />
 
@@ -70,32 +67,22 @@ const Cart = () => {
                   <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                     <CardContent>
                       <Typography variant="h6" component="div" gutterBottom>
-                        {item.name}
+                        {item.title}
                       </Typography>
-                      {item.price < item.originalPrice && (
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          sx={{ textDecoration: 'line-through' }}
-                        >
-                          {item.originalPrice.toLocaleString('vi-VN')} VND
-                        </Typography>
-                      )}
                       <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
-                        {item.price.toLocaleString('vi-VN')} VND
+                        {item.newPrice.toLocaleString('vi-VN')} VND
                       </Typography>
                       <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                         {item.description}
                       </Typography>
                     </CardContent>
 
-                    {/* Card actions for delete and other actions */}
                     <CardActions sx={{ justifyContent: 'space-between', paddingX: 2 }}>
-                      <Button size="small" color="primary" href="/detail">
+                      <Button size="small" color="primary" onClick={() => navigations(item.id)}>
                         Xem chi tiết
                       </Button>
-                      <IconButton edge="end" aria-label="delete" sx={{ color: 'red' }}>
-                        <DeleteIcon />
+                      <IconButton onClick={() => deleted(item.id)} edge="end" aria-label="delete" sx={{ color: 'red' }}>
+                        <DeleteIcon/>
                       </IconButton>
                     </CardActions>
                   </Box>
