@@ -9,9 +9,9 @@ export default defineConfig({
     hmr: {
       host: 'anhoangstore.xyz', // Use your domain here
     },
-    cors: {
-      origin: 'https://anhoangstore.xyz', // Allow your domain
-      methods: ['GET', 'POST'], // Allowed methods
-    },
+    // cors: {
+    //   origin: 'https://anhoangstore.xyz', // Allow your domain
+    //   methods: ['GET', 'POST'], // Allowed methods
+    // },
   },
 })
