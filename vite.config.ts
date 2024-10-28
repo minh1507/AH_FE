@@ -6,9 +6,9 @@ export default defineConfig({
   server: {
     host: '0.0.0.0', // Allow access from any IP address
     port: 5173, // Your Vite server port
-    hmr: {
-      host: 'anhoangstore.xyz', // Use your domain here
-    },
+    // hmr: {
+    //   host: 'anhoangstore.xyz', // Use your domain here
+    // },
     // cors: {
     //   origin: 'https://anhoangstore.xyz', // Allow your domain
     //   methods: ['GET', 'POST'], // Allowed methods
