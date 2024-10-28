@@ -3,7 +3,7 @@ import axios from 'axios';
 export class ProductService{
     static findAll = async (category: number) => {
         try {
-            const response = await axios.get('https://222.255.1.152:4600/be/product?categoryId=' + category);
+            const response = await axios.get('https://anhoangstore.xyz/be/product?categoryId=' + category);
             
             const products = response.data.data;
     
