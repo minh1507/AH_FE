@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -9,72 +9,47 @@ import {
   CardContent,
   TextField,
   InputAdornment,
-  Paper,
-  useMediaQuery,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import FavoriteIcon from '@mui/icons-material/Favorite'; // Optional: Add a favorite icon for better UI
 import { useTitle } from "../../hook/title/title";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { styled, useTheme } from "@mui/system";
-
-const ProductCard = styled(Paper)(({ theme }) => ({
-  padding: "20px",
-  backgroundColor: "#fff",
-  borderRadius: "10px",
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-  display: "flex",
-  flexDirection: "column",
-  height: "100%",
-  [theme.breakpoints.down("sm")]: {
-    padding: "10px",
-  },
-}));
-
-const OriginalPrice = styled(Typography)(({ theme }) => ({
-  fontSize: "14px",
-  textDecoration: "line-through",
-  color: "grey",
-}));
-
-const Price = styled(Typography)(({ theme }) => ({
-  fontSize: "16px",
-  fontWeight: "bold",
-  color: "#ff4b7b",
-  marginTop: "10px",
-}));
+import { ProductService } from "../../service/product";
 
 const Detail = () => {
+  const [product, setProduct] = useState<any>()
+
   const { id } = useParams();
   useTitle("Xem chi tiết");
 
   const navigate = useNavigate();
-  const theme = useTheme();
 
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  useEffect(() => {
+    findAll()
+  }, []);
 
+  const findAll = async () => {
+    const product = await ProductService.findOne(Number(id))
+    setProduct(product)
+  }
 
-  // Sample product data, replace with your actual data fetching logic
-  const product = {
-    id,
-    name: "Đầm Đen",
-    price: "100,000 VNĐ",
-    originalPrice: "150,000 VNĐ",
-    description: "Đầm đen sang trọng, phù hợp cho các buổi tiệc.",
-    image: "https://down-vn.img.susercontent.com/file/sg-11134201-7rccz-lsgoc1ju42zh96.webp",
+  const formatPrice = (price: any) => {
+    return price.toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 0, // Adjust based on whether you want to show decimal places
+      maximumFractionDigits: 0
+    });
   };
 
   return (
     <Container maxWidth="xl" sx={{ mt: 4 }}>
       <Grid container spacing={3}>
-        {/* Left Box: Image */}
         <Grid item xs={12} md={3}>
           <Card sx={{ backgroundColor: 'white', boxShadow: 2 }}>
             <CardContent>
               <Box
                 component="img"
-                src={product.image}
-                alt={product.name}
+                src={product && product.imageURL}
+                alt={product && product.name}
                 width="100%"
                 sx={{
                   borderRadius: 2,
@@ -85,24 +60,23 @@ const Detail = () => {
           </Card>
         </Grid>
 
-        {/* Middle Box: Product Information */}
         <Grid item xs={12} md={6}>
           <Card sx={{ backgroundColor: 'white', boxShadow: 2 }}>
             <CardContent>
               <Typography gutterBottom sx={{ fontSize: "1.5rem", fontWeight: 'bold', color: '#333' }}>
-                {product.name}
+                {product && product.title}
               </Typography>
               <Typography sx={{ mt: "10px !important", color: "#ff4b7b", fontWeight: "bold", mb: 2 }}>
-                {product.price}
+                {product && formatPrice(product.newPrice)} VNĐ
               </Typography>
               <Typography sx={{ textDecoration: "line-through", color: "grey", mb: 1, fontSize: "0.8rem" }}>
-                {product.originalPrice}
+                {product && formatPrice(product.oldPrice)} VNĐ
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "1.2rem", mt: "10px !important", lineHeight: 1.5, color: '#555' }}>
                 Thông tin về sản phẩm:
               </Typography>
               <Typography variant="body1" sx={{ mt: "3px !important", lineHeight: 1.5, color: '#555' }}>
-                {product.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat veritatis nemo nesciunt unde corporis veniam, molestiae tenetur voluptatem quod accusantium. Iure et quasi qui placeat soluta minus quam temporibus tenetur?
+                {product && product.description}
               </Typography>
             </CardContent>
           </Card>

@@ -29,4 +29,22 @@ export class ProductService{
               }
         }
     }
+
+    static findOne = async (id: number) => {
+        try {
+            const response = await axios.get('https://anhoangstore.xyz/be/product/' + id);
+            
+            const product = response.data.data;
+
+            const imageResponse = await axios.get(`https://anhoangstore.xyz/be/file/${product.file.file}`);
+    
+            return {...product, imageURL: imageResponse.data.data };
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                return error.response?.data
+              } else {
+                console.log('Unexpected Error:', error);
+              }
+        }
+    }
 }
