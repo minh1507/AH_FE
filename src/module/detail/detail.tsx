@@ -136,7 +136,7 @@ const Detail = () => {
                   color: "#555",
                 }}
               >
-                Thông tin về sản phẩm:
+                Thông tin chi tiết:
               </Typography>
               <Typography
                 variant="body1"
