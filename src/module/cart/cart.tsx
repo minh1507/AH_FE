@@ -1,4 +1,3 @@
-// src/components/cart/Cart.js
 import React from 'react';
 import {
   Box,
@@ -6,37 +5,43 @@ import {
   Button,
   Card,
   CardContent,
-  CardMedia,
-  CardActions,
   IconButton,
   Grid,
   Divider,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useRecoilState } from 'recoil';
 import { cartState } from './state';
 import { useNavigate } from 'react-router-dom';
-import { Navigation } from '@mui/icons-material';
 
 const Cart = () => {
-  // Fake data for cart items
   const [carts, setCarts] = useRecoilState<any[]>(cartState);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getTotalPrice = () => {
-    console.log(carts)
-    return carts.reduce((total, item) => total + (item.newPrice * item.count), 0);
+    return carts.reduce((total, item) => total + (item.newPrice + item.oldPrice) * item.count, 0);
+  };
+
+  const getDiscountPrice = () => {
+    return carts.reduce((total, item) => total + item.oldPrice * item.count, 0);
   };
 
   const deleted = (id: number) => {
     const updatedCarts = carts.filter((item) => item.id !== id);
     setCarts(updatedCarts);
-  }
+  };
 
   const navigations = (id: number) => {
-    navigate("/detail/"+id)
-  }
+    navigate('/detail/' + id);
+  };
 
   return (
     <Box sx={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', mt: 4 }}>
@@ -50,71 +55,92 @@ const Cart = () => {
           </Button>
         </Box>
       ) : (
-        <>
-          {/* Cart items grid layout */}
-          <Grid container spacing={3}>
-            {carts.map((item) => (
-              <Grid item xs={12} key={item.id}>
-                <Card sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                  {/* Product image on the left */}
-                  <CardMedia
-                    component="img"
-                    sx={{ width: 200 }} // Adjust the width for the image
-                    image={item.imageURL}
-                    alt={item.name}
-                  />
-
-                  {/* Product details on the right */}
-                  <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                    <CardContent>
-                      <Typography variant="h6" component="div" gutterBottom>
-                        {item.title}
-                      </Typography>
-                      <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
-                        {item.newPrice.toLocaleString('vi-VN')} VND
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                        {item.description}
-                      </Typography>
-                    </CardContent>
-
-                    <CardActions sx={{ justifyContent: 'space-between', paddingX: 2 }}>
-                      <Button size="small" color="primary" onClick={() => navigations(item.id)}>
-                        Xem chi tiết
-                      </Button>
-                      <IconButton onClick={() => deleted(item.id)} edge="end" aria-label="delete" sx={{ color: 'red' }}>
-                        <DeleteIcon/>
-                      </IconButton>
-                    </CardActions>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
+        <Grid container spacing={3}>
+          {/* Left Side: Cart Items Table */}
+          <Grid item xs={12} md={8}>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Hình ảnh</TableCell>
+                    <TableCell>Tên sản phẩm</TableCell>
+                    <TableCell>Giá</TableCell>
+                    <TableCell>Số lượng</TableCell>
+                    <TableCell>Thao tác</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {carts.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <img src={item.imageURL} alt={item.name} style={{ width: 80, height: 80 }} />
+                      </TableCell>
+                      <TableCell>{item.title}</TableCell>
+                      <TableCell>{(item.newPrice + item.oldPrice).toLocaleString('vi-VN')} VND</TableCell>
+                      <TableCell>{item.count}</TableCell>
+                      <TableCell>
+                        <Button size="small" color="primary" onClick={() => navigations(item.id)}>
+                          Xem chi tiết
+                        </Button>
+                        <IconButton
+                          onClick={() => deleted(item.id)}
+                          edge="end"
+                          aria-label="delete"
+                          sx={{ color: 'red' }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
 
-          {/* Total price and checkout button */}
-          <Divider sx={{ my: 3 }} />
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              mt: 3,
-              px: 2,
-            }}
-          >
-            <Typography variant="h6">Tổng cộng: {getTotalPrice().toLocaleString('vi-VN')} VND</Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<ShoppingCartCheckoutIcon />}
-              size="large"
-              sx={{ textTransform: 'none' }}
-            >
-              Thanh toán
-            </Button>
-          </Box>
-        </>
+          {/* Right Side: Summary Card */}
+          <Grid item xs={12} md={4}>
+            <Card sx={{ p: 3 }}>
+              <CardContent sx={{ padding: "0 !important" }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+                  <Typography variant="body1">Tạm tính:</Typography>
+                  <Typography variant="body1">{getTotalPrice().toLocaleString('vi-VN')} VND</Typography>
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                  <Typography variant="body1" color="text.secondary">
+                    Giảm giá:
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {getDiscountPrice().toLocaleString('vi-VN')} VND
+                  </Typography>
+                </Box>
+
+                <Divider sx={{ my: 2 }} />
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                  <Typography variant="h6" color="primary">
+                    Tổng tiền:
+                  </Typography>
+                  <Typography variant="h6" color="primary">
+                    {(getTotalPrice() - getDiscountPrice()).toLocaleString('vi-VN')} VND
+                  </Typography>
+                </Box>
+
+                <Button
+                  sx={{ mt: 2 }}
+                  variant="contained"
+                  color="primary"
+                  startIcon={<ShoppingCartCheckoutIcon />}
+                  size="large"
+                  fullWidth
+                >
+                  Mua hàng
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
       )}
     </Box>
   );
