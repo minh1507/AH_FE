@@ -25,7 +25,8 @@ const Cart = () => {
   const navigate = useNavigate()
 
   const getTotalPrice = () => {
-    return carts.reduce((total, item) => total + (item.price * item.count), 0);
+    console.log(carts)
+    return carts.reduce((total, item) => total + (item.newPrice * item.count), 0);
   };
 
   const deleted = (id: number) => {
