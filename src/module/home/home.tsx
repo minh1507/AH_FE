@@ -150,7 +150,11 @@ const Home = () => {
                       onClick={() => navigate(`/detail/${product.id}`)}
                       style={{
                         cursor: "pointer",
-                        width: isMobile ? "100%" : "auto", // Set width to 100% in mobile view
+                        width: isMobile ? "100%" : "auto",
+                        height: "365px", // Set a fixed height for the card
+                        display: "flex",
+                        flexDirection: "column",
+                        position: "relative"
                       }}
                     >
                       {!imageLoaded[product.id] && (
@@ -174,15 +178,57 @@ const Home = () => {
                         }}
                         onLoad={() => handleImageLoad(product.id)}
                       />
-                      <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
+
+                      <Box display="flex" position="relative" alignItems="center" sx={{ marginBottom: "7px" }}>
+                        <Price variant="body1">{formatPrice(product.newPrice)}₫</Price>
+                        {product.oldPrice && (
+                          <Typography
+                            variant="body2"
+                            color="error"
+                            sx={{
+                              marginLeft: "5px !important",
+                              backgroundColor: "#eeeeee",
+                              color: "black",
+                              padding: "4px 8px",
+                              borderRadius: "12px",
+                              fontSize: "0.75rem",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            -{Math.round(((product.newPrice - product.oldPrice) / product.newPrice) * 100)}%
+                          </Typography>
+                        )}
+                      </Box>
+
+                      {/* Title */}
+                      <Typography sx={{ marginBottom: "10px !important" }} variant="h6" gutterBottom>
                         {product.title}
                       </Typography>
-                      <Price variant="body1">{formatPrice(product.newPrice)}₫</Price>
-                      <OriginalPrice variant="body2">{formatPrice(product.oldPrice)}₫</OriginalPrice>
+
+                      {/* Description */}
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        {product.description}
+                      </Typography>
+
+                      {/* Sold Information */}
+                      <Typography variant="caption" color="textSecondary" sx={{ marginTop: "auto" }}>
+                        Đã bán: 0
+                      </Typography>
                     </ProductCard>
                   </Grid>
                 ))}
               </Grid>
+
 
               <CompanyCard>
                 <Typography sx={{ fontSize: "1.1rem" }} gutterBottom>
