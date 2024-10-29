@@ -177,8 +177,8 @@ const Home = () => {
                       <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
                         {product.title}
                       </Typography>
-                      <Price variant="body1">{formatPrice(product.newPrice)} VNĐ</Price>
-                      <OriginalPrice variant="body2">{formatPrice(product.oldPrice)} VNĐ</OriginalPrice>
+                      <Price variant="body1">{formatPrice(product.newPrice)}₫</Price>
+                      <OriginalPrice variant="body2">{formatPrice(product.oldPrice)}₫</OriginalPrice>
                     </ProductCard>
                   </Grid>
                 ))}

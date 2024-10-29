@@ -114,7 +114,7 @@ const Detail = () => {
                   mb: 2,
                 }}
               >
-                {product && formatPrice(product.newPrice)} VNĐ
+                {product && formatPrice(product.newPrice)}₫
               </Typography>
               <Typography
                 sx={{
@@ -124,7 +124,7 @@ const Detail = () => {
                   fontSize: "0.8rem",
                 }}
               >
-                {product && formatPrice(product.oldPrice)} VNĐ
+                {product && formatPrice(product.oldPrice)}₫
               </Typography>
               <Typography
                 variant="body1"

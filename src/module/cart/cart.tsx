@@ -76,7 +76,7 @@ const Cart = () => {
                         <img src={item.imageURL} alt={item.name} style={{ width: 80, height: 80 }} />
                       </TableCell>
                       <TableCell>{item.title}</TableCell>
-                      <TableCell>{(item.newPrice + item.oldPrice).toLocaleString('vi-VN')} VND</TableCell>
+                      <TableCell>{(item.newPrice + item.oldPrice).toLocaleString('vi-VN')}₫</TableCell>
                       <TableCell>{item.count}</TableCell>
                       <TableCell>
                         <Button size="small" color="primary" onClick={() => navigations(item.id)}>
@@ -104,7 +104,7 @@ const Cart = () => {
               <CardContent sx={{ padding: "0 !important" }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                   <Typography variant="body1">Tạm tính:</Typography>
-                  <Typography variant="body1">{getTotalPrice().toLocaleString('vi-VN')} VND</Typography>
+                  <Typography variant="body1">{getTotalPrice().toLocaleString('vi-VN')}₫</Typography>
                 </Box>
 
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -112,7 +112,7 @@ const Cart = () => {
                     Giảm giá:
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
-                    {getDiscountPrice().toLocaleString('vi-VN')} VND
+                    {getDiscountPrice().toLocaleString('vi-VN')}₫
                   </Typography>
                 </Box>
 
@@ -123,7 +123,7 @@ const Cart = () => {
                     Tổng tiền:
                   </Typography>
                   <Typography variant="h6" color="primary">
-                    {(getTotalPrice() - getDiscountPrice()).toLocaleString('vi-VN')} VND
+                    {(getTotalPrice() - getDiscountPrice()).toLocaleString('vi-VN')}₫
                   </Typography>
                 </Box>
 
