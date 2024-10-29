@@ -195,7 +195,7 @@ const Home = () => {
                               fontWeight: "bold",
                             }}
                           >
-                            -{Math.round(((product.newPrice - product.oldPrice) / product.newPrice) * 100)}%
+                            -{Math.round((product.oldPrice / product.newPrice) * 100)}%
                           </Typography>
                         )}
                       </Box>
