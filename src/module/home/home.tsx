@@ -97,21 +97,21 @@ const Home = () => {
   return (
     <div>
       <Box sx={{ my: 3 }} sx={{ padding: "0 !important" }}>
-        <Grid item xs={12} sx={{ padding: "0 !important" }}>
-          <Paper>
-            <img
-              src={im}
-              alt="Banner 2"
-              width="100%"
-              style={{ height: "auto", objectFit: "cover" }}
-            />
-          </Paper>
-        </Grid>
         <Container maxWidth="lg" sx={{ padding: "0 !important" }}>
           <Grid container spacing={3}>
-            {/* Menu Bar below the Banner and Slideshow */}
+            <Grid className="mt-3" item xs={12} sx={{ paddingBottom: "0 !important" }}>
+              <Paper>
+                <img
+                  src={im}
+                  alt="Banner 2"
+                  width="100%"
+                  style={{ height: "auto", objectFit: "cover" }}
+                />
+              </Paper>
+            </Grid>
+
             {!isMobile && (
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ paddingTop: "0 !important" }}>
                 <Box
                   sx={{
                     backgroundColor: "white",
