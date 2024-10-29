@@ -7,12 +7,13 @@ import {
   Grid,
   Paper,
   Divider,
+  Skeleton,
 } from "@mui/material";
 import { useTitle } from "../../hook/title/title";
 import { styled, useTheme } from "@mui/system";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from "react-router-dom";
-import im from "../../assets/download.jfif"
+import im from "../../assets/download.jfif";
 import { CategoryService } from "../../service/category";
 import { ProductService } from "../../service/product";
 
@@ -51,9 +52,10 @@ const Price = styled(Typography)(({ theme }) => ({
 }));
 
 const Home = () => {
-  const [categories, setCategories] = useState<any[]>([])
-  const [products, setproducts] = useState<any[]>([])
-  const [cat, setcat] = useState<any>()
+  const [categories, setCategories] = useState<any[]>([]);
+  const [products, setproducts] = useState<any[]>([]);
+  const [cat, setcat] = useState<any>();
+  const [imageLoaded, setImageLoaded] = useState<any>({});
 
   useTitle("Trang chủ");
   const navigate = useNavigate();
@@ -62,33 +64,40 @@ const Home = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
-    findAll()
+    findAll();
   }, []);
 
   const findAll = async () => {
-    const categories = await CategoryService.findAll()
-    const products = await ProductService.findAll(categories[0]?.id)
-    setCategories(categories)
-    setproducts(products)
-  }
+    const categories = await CategoryService.findAll();
+    const products = await ProductService.findAll(categories[0]?.id);
+    setCategories(categories);
+    setproducts(products);
+  };
 
   const handleCat = async (id: any) => {
-    const products = await ProductService.findAll(id)
-    setproducts(products)
-  }
+    const products = await ProductService.findAll(id);
+    setproducts(products);
+  };
 
   const formatPrice = (price: any) => {
-    return price.toLocaleString('en-US', {
-      style: 'decimal',
-      minimumFractionDigits: 0, // Adjust based on whether you want to show decimal places
-      maximumFractionDigits: 0
+    return price.toLocaleString("en-US", {
+      style: "decimal",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     });
+  };
+
+  const handleImageLoad = (productId: string) => {
+    setImageLoaded((prevState: any) => ({
+      ...prevState,
+      [productId]: true,
+    }));
   };
 
   return (
     <div>
-      <Box sx={{ my: 3 }} sx ={{ padding: "0 !important" }}>
-        <Grid item xs={12} sx ={{ padding: "0 !important" }}>
+      <Box sx={{ my: 3 }} sx={{ padding: "0 !important" }}>
+        <Grid item xs={12} sx={{ padding: "0 !important" }}>
           <Paper>
             <img
               src={im}
@@ -100,8 +109,6 @@ const Home = () => {
         </Grid>
         <Container maxWidth="lg" sx={{ padding: "0 !important" }}>
           <Grid container spacing={3}>
-
-
             {/* Menu Bar below the Banner and Slideshow */}
             {!isMobile && (
               <Grid item xs={12}>
@@ -118,6 +125,7 @@ const Home = () => {
                 >
                   {categories.map((prop) => (
                     <Button
+                      key={prop.id}
                       variant="text"
                       sx={{
                         color: "black",
@@ -135,10 +143,7 @@ const Home = () => {
             )}
 
             <Grid item xs={12}>
-              <Grid
-                container
-                spacing={isMobile ? 2 : 3}
-              >
+              <Grid container spacing={isMobile ? 2 : 3}>
                 {products.map((product) => (
                   <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                     <ProductCard
@@ -148,6 +153,14 @@ const Home = () => {
                         width: isMobile ? "100%" : "auto", // Set width to 100% in mobile view
                       }}
                     >
+                      {!imageLoaded[product.id] && (
+                        <Skeleton
+                          variant="rectangular"
+                          width="100%"
+                          height={150}
+                          sx={{ borderRadius: "10px", marginBottom: "10px" }}
+                        />
+                      )}
                       <img
                         src={product.imageURL}
                         alt="Product"
@@ -157,7 +170,9 @@ const Home = () => {
                           objectFit: "contain",
                           borderRadius: "10px",
                           marginBottom: "10px",
+                          display: imageLoaded[product.id] ? "block" : "none",
                         }}
+                        onLoad={() => handleImageLoad(product.id)}
                       />
                       <Typography sx={{ marginBottom: "10px !important" }} gutterBottom>
                         {product.title}
@@ -186,75 +201,14 @@ const Home = () => {
                   Thương Hiệu Nổi Bật
                 </Typography>
                 <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
-                  vascara
-                  /
-                  dior
-                  /
-                  esteelauder
-                  /
-                  th truemilk
-                  /
-                  barbie
-                  /
-                  owen
-                  /
-                  ensure
-                  /
-                  durex
-                  /
-                  bioderma
-                  /
-                  elly
-                  /
-                  milo
-                  /
-                  skechers
-                  /
-                  aldo
-                  /
-                  triumph
-                  /
-                  nutifood
-                  /
-                  kindle
-                  /
-                  nerman
-                  /
-                  wacom
-                  /
-                  anessa
-                  /
-                  yoosee
-                  /
-                  olay
-                  /
-                  similac
-                  /
-                  comfort
-                  /
-                  bitas
-                  /
-                  shiseido
-                  /
-                  langfarm
-                  /
-                  hukan
-                  /
-                  vichy
-                  /
-                  fila
-                  /
-                  tsubaki
-
+                  vascara / dior / esteelauder / th truemilk / barbie / owen / ensure /
+                  durex / bioderma / elly / milo / skechers / aldo / triumph / nutifood /
+                  kindle / nerman / wacom / anessa / yoosee / olay / similac / comfort /
+                  bitas / shiseido / langfarm / hukan / vichy / fila / tsubaki
                 </Typography>
               </CompanyCard>
-
-
-
             </Grid>
           </Grid>
-
-
         </Container>
       </Box>
     </div>
