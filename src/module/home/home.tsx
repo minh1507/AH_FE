@@ -8,6 +8,7 @@ import {
   Paper,
   Divider,
   Skeleton,
+  IconButton,
 } from "@mui/material";
 import { useTitle } from "../../hook/title/title";
 import { styled, useTheme } from "@mui/system";
@@ -16,6 +17,8 @@ import { useNavigate } from "react-router-dom";
 import im from "../../assets/download.jfif";
 import { CategoryService } from "../../service/category";
 import { ProductService } from "../../service/product";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const CompanyCard = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -151,7 +154,6 @@ const Home = () => {
                       style={{
                         cursor: "pointer",
                         width: isMobile ? "100%" : "auto",
-                        height: "365px", // Set a fixed height for the card
                         display: "flex",
                         flexDirection: "column",
                         position: "relative"
@@ -178,10 +180,21 @@ const Home = () => {
                         }}
                         onLoad={() => handleImageLoad(product.id)}
                       />
-
-                      <Box display="flex" position="relative" alignItems="center" sx={{ marginBottom: "7px" }}>
-                        <Price variant="body1">{formatPrice(product.newPrice)}₫</Price>
-                        {product.oldPrice && (
+                      <Typography
+                        sx={{
+                          marginBottom: "6px !important",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                        gutterBottom
+                        noWrap
+                      >
+                        {product.title}
+                      </Typography>
+                      <Box display="flex" position="relative" alignItems="center">
+                        <Price sx={{ fontSize: "0.8rem", }}>{formatPrice(product.newPrice)}₫</Price>
+                        {product.oldPrice > product.newPrice && (
                           <Typography
                             variant="body2"
                             color="error"
@@ -191,39 +204,14 @@ const Home = () => {
                               color: "black",
                               padding: "4px 8px",
                               borderRadius: "12px",
-                              fontSize: "0.75rem",
+                              fontSize: "0.6rem",
                               fontWeight: "bold",
                             }}
                           >
-                            -{Math.round((product.oldPrice / product.newPrice) * 100)}%
+                            -{100 - (Math.round((product.newPrice / product.oldPrice) * 100))}%
                           </Typography>
                         )}
                       </Box>
-
-                      {/* Title */}
-                      <Typography sx={{ marginBottom: "10px !important" }} variant="h6" gutterBottom>
-                        {product.title}
-                      </Typography>
-
-                      {/* Description */}
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          display: "-webkit-box",
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        {product.description}
-                      </Typography>
-
-                      {/* Sold Information */}
-                      <Typography variant="caption" color="textSecondary" sx={{ marginTop: "auto" }}>
-                        Đã bán: 0
-                      </Typography>
                     </ProductCard>
                   </Grid>
                 ))}
@@ -235,11 +223,31 @@ const Home = () => {
                   Công ty THHH An Hoàng
                 </Typography>
                 <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
-                  Tòa nhà số 1 đường ..., quận ..., thành phố Hà Nội
+                  Địa chỉ: thành phố Hà Nội
                 </Typography>
                 <Typography sx={{ fontSize: "0.9rem" }} variant="body1">
-                  Hotline: ...
+                  Hotline: 0365239168
                 </Typography>
+
+                <IconButton
+                  color="primary"
+                  component="a"
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  aria-label="Facebook"
+                >
+                  <FacebookIcon />
+                </IconButton>
+
+                <IconButton
+                  color="secondary"
+                  component="a"
+                  href="https://www.instagram.com"
+                  target="_blank"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon />
+                </IconButton>
 
                 <Divider sx={{ marginY: 2 }} />
 
