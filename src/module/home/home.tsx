@@ -241,7 +241,7 @@ const Home = () => {
 
                 <IconButton
                   color="secondary"
-                  component="a"
+                  component="a" 
                   href="https://www.instagram.com"
                   target="_blank"
                   aria-label="Instagram"
