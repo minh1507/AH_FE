@@ -10,8 +10,16 @@ export class ProductService{
             const productsWithImages = await Promise.all(
                 products.map(async (product:any) => {
                     try {
-                        const imageResponse = await axios.get(`https://anhoangstore.xyz/be/file/${product.file.file}`);
-                        return { ...product, imageURL: imageResponse.data.data }; 
+                        const imageResponse = await axios.get(
+                            `https://anhoangstore.xyz/be/file/${product.file.file}`,
+                            {
+                              responseType: 'blob',
+                            }
+                          );
+                    
+                        const imageUrl = URL.createObjectURL(imageResponse.data);
+
+                        return { ...product, imageURL: imageUrl }; 
                     } catch (imageError) {
                         console.log(`Error fetching image for file ${product.file.file}`, imageError);
                         return product; 
@@ -36,9 +44,16 @@ export class ProductService{
             
             const product = response.data.data;
 
-            const imageResponse = await axios.get(`https://anhoangstore.xyz/be/file/${product.file.file}`);
+            const imageResponse = await axios.get(
+                `https://anhoangstore.xyz/be/file/${product.file.file}`,
+                {
+                  responseType: 'blob',
+                }
+              );
+        
+            const imageUrl = URL.createObjectURL(imageResponse.data);
     
-            return {...product, imageURL: imageResponse.data.data };
+            return {...product, imageURL: imageUrl };
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 return error.response?.data
