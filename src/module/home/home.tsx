@@ -19,6 +19,7 @@ import { CategoryService } from "../../service/category";
 import { ProductService } from "../../service/product";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import ReactGA from 'react-ga4';
 
 const CompanyCard = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -150,7 +151,14 @@ const Home = () => {
                 {products.map((product) => (
                   <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                     <ProductCard
-                      onClick={() => navigate(`/detail/${product.id}`)}
+                      onClick={() => {
+                        ReactGA.event({
+                          category: 'Button',  
+                          action: 'Click',    
+                          label: `Detail page with product title ${product.title}`,
+                        });
+                        navigate(`/detail/${product.id}`)}
+                      }
                       style={{
                         cursor: "pointer",
                         width: isMobile ? "100%" : "auto",
