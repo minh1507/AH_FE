@@ -11,7 +11,24 @@ function App() {
         ReactGA.initialize("G-ZDZKNNV4W6");
     
         ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
+
+        checkFirstVisit();
       }, []);
+
+
+      const checkFirstVisit = () => {
+        const isFirstVisit = localStorage.getItem('first_open');
+      
+        if (!isFirstVisit) {
+          localStorage.setItem('first_open', 'true');
+      
+          ReactGA.event({
+            category: 'User Engagement',
+            action: 'first_open', 
+            label: 'First Open Event', 
+          });
+        }
+      };
 
     return (
         <BrowserRouter>
