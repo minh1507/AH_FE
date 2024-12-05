@@ -31,6 +31,7 @@ const Detail = () => {
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
     address: "",
+    phone: ""
   });
 
   const { id } = useParams();
@@ -248,6 +249,15 @@ const Detail = () => {
             margin="normal"
             name="address"
             value={customerInfo.address}
+            onChange={handleCustomerInfoChange}
+          />
+           <TextField
+            label="Địa chỉ"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            name="address"
+            value={customerInfo.phone}
             onChange={handleCustomerInfoChange}
           />
         </DialogContent>
