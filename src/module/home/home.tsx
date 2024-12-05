@@ -228,10 +228,13 @@ const Home = () => {
 
               <CompanyCard>
                 <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
-                  Địa chỉ: thành phố Hà Nội
+                  AN HOÀNG STORE - SHOP ONLINE
                 </Typography>
                 <Typography sx={{ fontSize: "0.9rem" }} variant="body1">
-                  Hotline: 0365239168
+                  BASED ON HANOI SINCE 2023
+                </Typography>
+                <Typography sx={{ fontSize: "0.9rem" }} variant="body1">
+                  HOTLINE: 0365.239.168
                 </Typography>
 
                 <IconButton
