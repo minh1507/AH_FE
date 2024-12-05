@@ -6,7 +6,6 @@ import {
   Container,
   Grid,
   Paper,
-  Divider,
   Skeleton,
   IconButton,
 } from "@mui/material";
@@ -20,6 +19,7 @@ import { ProductService } from "../../service/product";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import ReactGA from 'react-ga4';
+import ZaloIcon from '../../assets/zalo.svg'
 
 const CompanyCard = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -227,8 +227,6 @@ const Home = () => {
 
 
               <CompanyCard>
-                <Typography sx={{ fontSize: "1.1rem" }} gutterBottom>
-                  Công ty THHH An Hoàng
                 </Typography>
                 <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
                   Địa chỉ: thành phố Hà Nội
@@ -240,7 +238,7 @@ const Home = () => {
                 <IconButton
                   color="primary"
                   component="a"
-                  href="https://www.facebook.com"
+                  href="https://www.facebook.com/anhoangstoree"
                   target="_blank"
                   aria-label="Facebook"
                 >
@@ -250,24 +248,22 @@ const Home = () => {
                 <IconButton
                   color="secondary"
                   component="a" 
-                  href="https://www.instagram.com"
+                  href="https://www.instagram.com/an.hoangstore?fbclid=IwY2xjawG99btleHRuA2FlbQIxMAABHcX3DyctNmydlQ2-hqlT0LNNZqiQYG_AmhRPpJ_39lgfU55XBRMObvHJlA_aem_00fFLsK2z-ScWCytuXDWog"
                   target="_blank"
                   aria-label="Instagram"
                 >
                   <InstagramIcon />
                 </IconButton>
 
-                <Divider sx={{ marginY: 2 }} />
-
-                <Typography sx={{ fontSize: "1.1rem" }} gutterBottom>
-                  Thương Hiệu Nổi Bật
-                </Typography>
-                <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
-                  vascara / dior / esteelauder / th truemilk / barbie / owen / ensure /
-                  durex / bioderma / elly / milo / skechers / aldo / triumph / nutifood /
-                  kindle / nerman / wacom / anessa / yoosee / olay / similac / comfort /
-                  bitas / shiseido / langfarm / hukan / vichy / fila / tsubaki
-                </Typography>
+                <IconButton
+                  color="secondary"
+                  component="a" 
+                  href="https://zalo.me/g/lztkvi681"
+                  target="_blank"
+                  aria-label="Instagram"
+                >
+                  <img src={ZaloIcon} alt="Zalo Icon" style={{ width: "24px", height: "24px" }} />
+                </IconButton>
               </CompanyCard>
             </Grid>
           </Grid>
