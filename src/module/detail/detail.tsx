@@ -66,6 +66,8 @@ const Detail = () => {
     } else {
       setCarts([...carts, { ...product, id: id, count: quantity }]);
     }
+
+    showToast("Thêm vào giỏ hàng thành công", 'success');
   };
 
   const formatPrice = (price: any) => {
