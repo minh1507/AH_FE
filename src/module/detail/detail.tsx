@@ -22,6 +22,7 @@ import { ProductService } from "../../service/product";
 import { useRecoilState } from "recoil";
 import { cartState } from "../cart/state";
 import { BuyService } from "../../service/buy";
+import useToast from "../../hook/toast/toast";
 
 const Detail = () => {
   const [product, setProduct] = useState<any>();
@@ -34,6 +35,7 @@ const Detail = () => {
     address: "",
     phone: ""
   });
+  const { showToast } = useToast();
 
   const { id } = useParams();
   useTitle("Xem chi tiết");
@@ -100,6 +102,7 @@ const Detail = () => {
       quantity: '1'
     })
     setOpenDialog(false); 
+    showToast("Mua hàng thành công, xin chờ liên hệ", 'success');
   };
 
   return (
