@@ -23,6 +23,7 @@ import { useRecoilState } from "recoil";
 import { cartState } from "../cart/state";
 import { BuyService } from "../../service/buy";
 import useToast from "../../hook/toast/toast";
+import ReactGA from 'react-ga4';
 
 const Detail = () => {
   const [product, setProduct] = useState<any>();
@@ -103,6 +104,12 @@ const Detail = () => {
       phone: customerInfo.phone,
       quantity: '1'
     })
+    ReactGA.event({
+      category: 'Ecommerce',
+      action: 'Purchase',
+      label: product.title,
+      value: product.newPrice,
+    });
     setOpenDialog(false); 
     showToast("Mua hàng thành công, xin chờ liên hệ", 'success');
   };

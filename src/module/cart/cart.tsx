@@ -75,6 +75,7 @@ const Cart = () => {
       })
     })
 
+    setCarts([])
     setOpenDialog(false); 
     showToast("Mua hàng thành công, xin chờ liên hệ", 'success');
   };
