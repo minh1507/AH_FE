@@ -13,7 +13,7 @@ import { useTitle } from "../../hook/title/title";
 import { styled, useTheme } from "@mui/system";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useNavigate } from "react-router-dom";
-import im from "../../assets/download.jfif";
+import im from "../../assets/chrismas.jpg";
 import { CategoryService } from "../../service/category";
 import { ProductService } from "../../service/product";
 import FacebookIcon from '@mui/icons-material/Facebook';
