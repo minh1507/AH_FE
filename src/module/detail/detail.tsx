@@ -10,6 +10,10 @@ import {
   TextField,
   InputAdornment,
   Skeleton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTitle } from "../../hook/title/title";
@@ -23,6 +27,11 @@ const Detail = () => {
   const [carts, setCarts] = useRecoilState<any[]>(cartState);
   const [quantity, setQuantity] = useState<number>(1);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false); // Popup state
+  const [customerInfo, setCustomerInfo] = useState({
+    name: "",
+    address: "",
+  });
 
   const { id } = useParams();
   useTitle("Xem chi tiết");
@@ -65,6 +74,26 @@ const Detail = () => {
 
   const handleImageLoad = () => {
     setImageLoaded(true);
+  };
+
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleCustomerInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCustomerInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    console.log("Submitted information:");
+    console.log("Product ID:", id);
+    console.log("Customer Info:", customerInfo);
+    setOpenDialog(false); 
   };
 
   return (
@@ -181,6 +210,7 @@ const Detail = () => {
                   variant="contained"
                   color="primary"
                   sx={{ mt: 1, width: "100%" }}
+                  onClick={handleDialogOpen}
                 >
                   Mua ngay
                 </Button>
@@ -197,6 +227,39 @@ const Detail = () => {
           </Card>
         </Grid>
       </Grid>
+
+      {/* Dialog for Customer Information */}
+      <Dialog open={openDialog} onClose={handleDialogClose} fullWidth>
+        <DialogTitle>Thông tin khách hàng</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Họ và tên"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            name="name"
+            value={customerInfo.name}
+            onChange={handleCustomerInfoChange}
+          />
+          <TextField
+            label="Địa chỉ"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            name="address"
+            value={customerInfo.address}
+            onChange={handleCustomerInfoChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="secondary">
+            Hủy
+          </Button>
+          <Button onClick={handleSubmit} color="primary" variant="contained">
+            Xác nhận
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
