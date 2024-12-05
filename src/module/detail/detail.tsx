@@ -21,6 +21,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { ProductService } from "../../service/product";
 import { useRecoilState } from "recoil";
 import { cartState } from "../cart/state";
+import { BuyService } from "../../service/buy";
 
 const Detail = () => {
   const [product, setProduct] = useState<any>();
@@ -91,9 +92,13 @@ const Detail = () => {
   };
 
   const handleSubmit = () => {
-    console.log("Submitted information:");
-    console.log("Product ID:", id);
-    console.log("Customer Info:", customerInfo);
+    BuyService.create({
+      productId: id,
+      name: customerInfo.name,
+      address: customerInfo.address,
+      phone: customerInfo.phone,
+      quantity: '1'
+    })
     setOpenDialog(false); 
   };
 
@@ -252,11 +257,11 @@ const Detail = () => {
             onChange={handleCustomerInfoChange}
           />
            <TextField
-            label="Địa chỉ"
+            label="Điện thoại"
             variant="outlined"
             fullWidth
             margin="normal"
-            name="address"
+            name="phone"
             value={customerInfo.phone}
             onChange={handleCustomerInfoChange}
           />
