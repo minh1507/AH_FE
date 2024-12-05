@@ -227,7 +227,6 @@ const Home = () => {
 
 
               <CompanyCard>
-                </Typography>
                 <Typography sx={{ fontSize: "0.9rem" }} variant="body1" gutterBottom>
                   Địa chỉ: thành phố Hà Nội
                 </Typography>
